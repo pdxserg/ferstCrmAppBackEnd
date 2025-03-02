@@ -6,6 +6,11 @@
   "dependencies": {
     "express": "^4.21.2"
   },
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon --inspect dist/index.js",
+   "start": "concurrently \"yarn dev\" \"yarn watch\""
+  },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
