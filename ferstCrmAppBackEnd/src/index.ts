@@ -5,9 +5,37 @@ import express,{Request, Response} from "express";
 const app = express()
 const port = 5000
 
-app.get('/', (req: Request, res:Response) => {
-    res.send('Hello World!!!1233345')
-})
+const products = [{title: "tomato"}, {title: "orange"},]
+const adresses = [{street: "Utkin"}, {street: "Baranov"}]
+
+app.get('/products', (req:Request, res:Response) => {
+    res.send(products);
+});
+app.get('/products/:productTitle', (req:Request, res:Response) => {
+    const params = req.params.productTitle
+    let product = products.find(el => el.title === params)
+    if (product){
+        res.send(product);
+    }
+
+});
+
+
+// app.post('/products', (req:Request, res:Response) => {
+// const {title} = req.body
+//     if(!title){
+//         return res.status(400).send({error: "Title is requered"})
+//     } else {
+//        products.push({title})
+//         res.send(products)
+//     }
+//     res.send(products);
+// });
+
+
+app.get('/adresses', (req:Request, res:Response) => {
+    res.send(adresses);
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

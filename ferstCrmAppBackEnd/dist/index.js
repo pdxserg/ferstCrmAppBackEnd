@@ -6,18 +6,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 5000;
-
-const products = [{title: "tomato"}, {title: "orange"},]
-const adresses = [{street: "Utkin"}, {street: "Baranov"}]
-
+const products = [{ title: "tomato" }, { title: "orange" },];
+const adresses = [{ street: "Utkin" }, { street: "Baranov" }];
 app.get('/products', (req, res) => {
     res.send(products);
 });
+app.get('/products/:productTitle', (req, res) => {
+    const params = req.params.productTitle;
+    let product = products.find(el => el.title === params);
+    res.send(product);
+});
+// app.post('/products', (req:Request, res:Response) => {
+// const {title} = req.body
+//     if(!title){
+//         return res.status(400).send({error: "Title is requered"})
+//     } else {
+//        products.push({title})
+//         res.send(products)
+//     }
+//     res.send(products);
+// });
 app.get('/adresses', (req, res) => {
     res.send(adresses);
 });
-
-
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
