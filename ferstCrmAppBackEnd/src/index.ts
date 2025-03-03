@@ -37,7 +37,7 @@ app.put('/products/:id', (req:Request, res:Response) => {
     const index = products.findIndex(el => el.id === productId);
     if (index !== -1) {
         products[index].title=title;
-        res.status(200).send({ message: "Product updated successfully" });
+        res.status(200).send({ message: "Product updated successfully" ,products});
     } else {
         res.status(404).send({ error: "Product not found!!!" });
     }
