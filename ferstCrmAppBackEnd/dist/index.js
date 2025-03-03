@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
 const port = 5000;
 const products = [{ id: "1", title: "tomato" }, { id: "2", title: "orange" },];
 const adresses = [{ id: "1", street: "Utkin" }, { id: "2", street: "Baranov" }];
@@ -15,6 +16,19 @@ app.get('/products', (req, res) => {
     }
     else {
         res.send(products);
+    }
+});
+app.post('/products', (req, res) => {
+    var _a;
+    const title = (_a = req.body.title) === null || _a === void 0 ? void 0 : _a.trim();
+    const generateId = () => Math.random().toString(36).slice(2, 9);
+    if (title) {
+        const newProduct = { id: generateId(), title: title };
+        products.unshift(newProduct);
+        res.status(201).send({ message: "Product created successfully", newProduct });
+    }
+    else {
+        res.status(400).send({ error: "Product not created!!!" });
     }
 });
 app.get('/products/:productTitle', (req, res) => {
@@ -32,7 +46,7 @@ app.delete('/products/:id', (req, res) => {
     const index = products.findIndex(el => el.id === productId);
     if (index !== -1) {
         products.splice(index, 1);
-        res.send({ message: "Product deleted successfully", products });
+        res.status(204).send({ message: "Product deleted successfully" });
     }
     else {
         res.status(404).send({ error: "Product not found!!!" });

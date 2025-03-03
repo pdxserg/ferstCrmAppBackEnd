@@ -3,6 +3,7 @@ import express,{Request, Response} from "express";
 
 
 const app = express()
+app.use(express.json());
 const port = 5000
 
 const products = [{id:"1",title: "tomato"}, {id:"2",title: "orange"},]
@@ -15,6 +16,18 @@ app.get('/products', (req:Request, res:Response) => {
 
     }else {
         res.send(products);
+    }
+
+});
+app.post('/products', (req:Request, res:Response) => {
+    const title = req.body.title?.trim()
+    const generateId = () => Math.random().toString(36).slice(2, 9);
+    if(title){
+        const newProduct = {id: generateId(), title: title}
+        products.unshift(newProduct)
+        res.status(201).send({ message: "Product created successfully",newProduct });
+    } else {
+        res.status(400).send({ error: "Product not created!!!" });
     }
 
 });
@@ -34,7 +47,7 @@ app.delete('/products/:id', (req: Request, res: Response) => {
     const index = products.findIndex(el => el.id === productId);
     if (index !== -1) {
         products.splice(index, 1);
-        res.send({ message: "Product deleted successfully", products });
+        res.status(204).send({ message: "Product deleted successfully" });
     } else {
         res.status(404).send({ error: "Product not found!!!" });
     }
