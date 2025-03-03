@@ -1,17 +1,12 @@
 import {Request, Response, Router} from "express";
+import {repositoryProducts} from "../repository-products";
 
-const products = [{id:"1",title: "tomato"}, {id:"2",title: "orange"},]
+
 export const productsRouter = Router()
 
 productsRouter.get('/', (req:Request, res:Response) => {
-	if(req.query.title){
-		const searchString = req.query.title.toString()
-		res.send(products.filter(el => el.title.toLowerCase().includes(searchString.toLowerCase())))
-
-	}else {
-		res.send(products);
-	}
-
+	const foundProducts =repositoryProducts.findProducts(req.query.title?.toString())
+	res.send(foundProducts)
 });
 productsRouter.get('/:productTitle', (req:Request, res:Response) => {
 	const params = req.params.productTitle
