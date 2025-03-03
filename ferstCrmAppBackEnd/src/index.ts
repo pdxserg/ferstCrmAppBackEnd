@@ -19,6 +19,16 @@ app.get('/products', (req:Request, res:Response) => {
     }
 
 });
+app.get('/products/:productTitle', (req:Request, res:Response) => {
+    const params = req.params.productTitle
+    let product = products.find(el => el.id === params)
+    if (product){
+        res.send(product);
+    } else {
+        res.status(404).send({error: "Not found!!!"})
+    }
+
+});
 app.post('/products', (req:Request, res:Response) => {
     const title = req.body.title?.trim()
     const generateId = () => Math.random().toString(36).slice(2, 9);
@@ -32,27 +42,14 @@ app.post('/products', (req:Request, res:Response) => {
 
 });
 app.put('/products/:id', (req:Request, res:Response) => {
-    const title = req.body.title?.trim()
-    const productId = req.params.id;
-    const index = products.findIndex(el => el.id === productId);
-    if (index !== -1) {
-        products[index].title=title;
-        res.status(200).send({ message: "Product updated successfully" ,products});
+    const product  =products.find(el=>el.id === req.params.id)
+    if(product){
+        product.title=req.body.title?.trim()
+        res.send({ message: "Product updated successfully" ,product});
     } else {
         res.status(404).send({ error: "Product not found!!!" });
     }
 });
-app.get('/products/:productTitle', (req:Request, res:Response) => {
-    const params = req.params.productTitle
-    let product = products.find(el => el.id === params)
-    if (product){
-        res.send(product);
-    } else {
-         res.status(404).send({error: "Not found!!!"})
-    }
-
-});
-
 app.delete('/products/:id', (req: Request, res: Response) => {
     const productId = req.params.id;
     const index = products.findIndex(el => el.id === productId);
