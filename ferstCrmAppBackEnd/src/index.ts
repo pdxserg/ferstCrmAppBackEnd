@@ -31,6 +31,17 @@ app.post('/products', (req:Request, res:Response) => {
     }
 
 });
+app.put('/products/:id', (req:Request, res:Response) => {
+    const title = req.body.title?.trim()
+    const productId = req.params.id;
+    const index = products.findIndex(el => el.id === productId);
+    if (index !== -1) {
+        products[index].title=title;
+        res.status(200).send({ message: "Product updated successfully" });
+    } else {
+        res.status(404).send({ error: "Product not found!!!" });
+    }
+});
 app.get('/products/:productTitle', (req:Request, res:Response) => {
     const params = req.params.productTitle
     let product = products.find(el => el.id === params)

@@ -31,6 +31,19 @@ app.post('/products', (req, res) => {
         res.status(400).send({ error: "Product not created!!!" });
     }
 });
+app.put('/products/:id', (req, res) => {
+    var _a;
+    const title = (_a = req.body.title) === null || _a === void 0 ? void 0 : _a.trim();
+    const productId = req.params.id;
+    const index = products.findIndex(el => el.id === productId);
+    if (index !== -1) {
+        products[index].title = title;
+        res.status(204).send({ message: "Product updated successfully" });
+    }
+    else {
+        res.status(404).send({ error: "Product not found!!!" });
+    }
+});
 app.get('/products/:productTitle', (req, res) => {
     const params = req.params.productTitle;
     let product = products.find(el => el.id === params);
