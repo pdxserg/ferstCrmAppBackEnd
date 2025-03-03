@@ -28,13 +28,14 @@ app.get('/products/:productTitle', (req, res) => {
     }
 });
 app.delete('/products/:id', (req, res) => {
-    const params = req.params.id;
-    let product = products.filter(el => el.title !== params);
-    if (product) {
-        res.send(product);
+    const productId = req.params.id;
+    const index = products.findIndex(el => el.id === productId);
+    if (index !== -1) {
+        products.splice(index, 1);
+        res.send({ message: "Product deleted successfully", products });
     }
     else {
-        res.status(404).send({ error: "Not found!!!" });
+        res.status(404).send({ error: "Product not found!!!" });
     }
 });
 // app.post('/products', (req:Request, res:Response) => {

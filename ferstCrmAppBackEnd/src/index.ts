@@ -28,15 +28,16 @@ app.get('/products/:productTitle', (req:Request, res:Response) => {
     }
 
 });
-app.delete('/products/:id', (req:Request, res:Response) => {
-    const params = req.params.id
-    let product = products.filter(el => el.title !== params)
-    if (product){
-        res.send(product);
-    } else {
-         res.status(404).send({error: "Not found!!!"})
-    }
 
+app.delete('/products/:id', (req: Request, res: Response) => {
+    const productId = req.params.id;
+    const index = products.findIndex(el => el.id === productId);
+    if (index !== -1) {
+        products.splice(index, 1);
+        res.send({ message: "Product deleted successfully", products });
+    } else {
+        res.status(404).send({ error: "Product not found!!!" });
+    }
 });
 
 
