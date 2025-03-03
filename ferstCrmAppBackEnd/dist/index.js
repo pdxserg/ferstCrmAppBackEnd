@@ -4,78 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const products_router_1 = require("./Routes/products-router");
+const adresses_router_1 = require("./Routes/adresses-router");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const port = 5000;
-const products = [{ id: "1", title: "tomato" }, { id: "2", title: "orange" },];
-const adresses = [{ id: "1", street: "Utkin" }, { id: "2", street: "Baranov" }];
-app.get('/products', (req, res) => {
-    if (req.query.title) {
-        const searchString = req.query.title.toString();
-        res.send(products.filter(el => el.title.toLowerCase().includes(searchString.toLowerCase())));
-    }
-    else {
-        res.send(products);
-    }
-});
-app.get('/products/:productTitle', (req, res) => {
-    const params = req.params.productTitle;
-    let product = products.find(el => el.id === params);
-    if (product) {
-        res.send(product);
-    }
-    else {
-        res.status(404).send({ error: "Not found!!!" });
-    }
-});
-app.post('/products', (req, res) => {
-    var _a;
-    const title = (_a = req.body.title) === null || _a === void 0 ? void 0 : _a.trim();
-    const generateId = () => Math.random().toString(36).slice(2, 9);
-    if (title) {
-        const newProduct = { id: generateId(), title: title };
-        products.unshift(newProduct);
-        res.status(201).send({ message: "Product created successfully", newProduct });
-    }
-    else {
-        res.status(400).send({ error: "Product not created!!!" });
-    }
-});
-app.put('/products/:id', (req, res) => {
-    var _a;
-    const product = products.find(el => el.id === req.params.id);
-    if (product) {
-        product.title = (_a = req.body.title) === null || _a === void 0 ? void 0 : _a.trim();
-        res.send({ message: "Product updated successfully", product });
-    }
-    else {
-        res.status(404).send({ error: "Product not found!!!" });
-    }
-});
-app.delete('/products/:id', (req, res) => {
-    const productId = req.params.id;
-    const index = products.findIndex(el => el.id === productId);
-    if (index !== -1) {
-        products.splice(index, 1);
-        res.status(204).send({ message: "Product deleted successfully" });
-    }
-    else {
-        res.status(404).send({ error: "Product not found!!!" });
-    }
-});
-// app.post('/products', (req:Request, res:Response) => {
-// const {title} = req.body
-//     if(!title){
-//         return res.status(400).send({error: "Title is requered"})
-//     } else {
-//        products.push({title})
-//         res.send(products)
-//     }
-//     res.send(products);
-// });
-app.get('/adresses', (req, res) => {
-    res.send(adresses);
-});
+app.use('/products', products_router_1.productsRouter);
+app.use('/adresses', adresses_router_1.adressesRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
