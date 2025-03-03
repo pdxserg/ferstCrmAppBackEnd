@@ -5,20 +5,40 @@ import express,{Request, Response} from "express";
 const app = express()
 const port = 5000
 
-const products = [{title: "tomato"}, {title: "orange"},]
-const adresses = [{street: "Utkin"}, {street: "Baranov"}]
+const products = [{id:"1",title: "tomato"}, {id:"2",title: "orange"},]
+const adresses = [{id:"1",street: "Utkin"}, {id:"2",street: "Baranov"}]
 
 app.get('/products', (req:Request, res:Response) => {
-    res.send(products);
-});
-app.get('/products/:productTitle', (req:Request, res:Response) => {
-    const params = req.params.productTitle
-    let product = products.find(el => el.title === params)
-    if (product){
-        res.send(product);
+    if(req.query.title){
+        const searchString = req.query.title.toString()
+        res.send(products.filter(el => el.title.toLowerCase().includes(searchString.toLowerCase())))
+
+    }else {
+        res.send(products);
     }
 
 });
+app.get('/products/:productTitle', (req:Request, res:Response) => {
+    const params = req.params.productTitle
+    let product = products.find(el => el.id === params)
+    if (product){
+        res.send(product);
+    } else {
+         res.status(404).send({error: "Not found!!!"})
+    }
+
+});
+app.delete('/products/:id', (req:Request, res:Response) => {
+    const params = req.params.id
+    let product = products.filter(el => el.title !== params)
+    if (product){
+        res.send(product);
+    } else {
+         res.status(404).send({error: "Not found!!!"})
+    }
+
+});
+
 
 
 // app.post('/products', (req:Request, res:Response) => {
