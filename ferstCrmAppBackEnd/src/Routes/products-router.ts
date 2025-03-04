@@ -8,26 +8,40 @@ productsRouter.get('/', (req:Request, res:Response) => {
 	const foundProducts =repositoryProducts.findProducts(req.query.title?.toString())
 	res.send(foundProducts)
 });
-productsRouter.get('/:productTitle', (req:Request, res:Response) => {
-	const params = req.params.productTitle
-	let product = products.find(el => el.id === params)
-	if (product){
-		res.send(product);
-	} else {
-		res.status(404).send({error: "Not found!!!"})
-	}
+productsRouter.get('/:id', (req:Request, res:Response) => {
+	const params = req.params.id
+const product  = repositoryProducts.getProductById(params)
+	if (params){
+			res.send(product);
+		} else {
+			res.status(404).send({error: "Not found!!!"})
+		}
+
+	// let product = products.find(el => el.id === params)
+	// if (product){
+	// 	res.send(product);
+	// } else {
+	// 	res.status(404).send({error: "Not found!!!"})
+	// }
 
 });
 productsRouter.post('/', (req:Request, res:Response) => {
 	const title = req.body.title?.trim()
-	const generateId = () => Math.random().toString(36).slice(2, 9);
-	if(title){
-		const newProduct = {id: generateId(), title: title}
-		products.unshift(newProduct)
-		res.status(201).send({ message: "Product created successfully",newProduct });
-	} else {
-		res.status(400).send({ error: "Product not created!!!" });
-	}
+
+	const createProduct =repositoryProducts.createProduct(title)
+	if (title){
+		res.send(createProduct)
+	}else {
+			res.status(400).send({ error: "Product not created!!!" });
+		}
+
+	// if(title){
+	// 	const newProduct = {id: generateId(), title: title}
+	// 	products.unshift(newProduct)
+	// 	res.status(201).send({ message: "Product created successfully",newProduct });
+	// } else {
+	// 	res.status(400).send({ error: "Product not created!!!" });
+	// }
 
 });
 productsRouter.put('/:id', (req:Request, res:Response) => {
