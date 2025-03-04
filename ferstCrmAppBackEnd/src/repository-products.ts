@@ -17,8 +17,8 @@ export  const repositoryProducts = {
 			return newProduct
 
 	},
-	getProductById(id){
-		const product = products.find(el=>el.id === id)
+	getProductById(productId:string){
+		const product = products.find(el=>el.id === productId)
 		return product
 	}
 }

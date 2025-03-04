@@ -9,9 +9,9 @@ productsRouter.get('/', (req:Request, res:Response) => {
 	res.send(foundProducts)
 });
 productsRouter.get('/:id', (req:Request, res:Response) => {
-	const params = req.params.id
-const product  = repositoryProducts.getProductById(params)
-	if (params){
+	const productId = req.params.id
+const product  = repositoryProducts.getProductById(productId)
+	if (product){
 			res.send(product);
 		} else {
 			res.status(404).send({error: "Not found!!!"})
