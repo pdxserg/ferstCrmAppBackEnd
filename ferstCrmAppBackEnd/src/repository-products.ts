@@ -20,5 +20,13 @@ export  const repositoryProducts = {
 	getProductById(productId:string){
 		const product = products.find(el=>el.id === productId)
 		return product
-	}
+	},
+	updateProductById(productId:string,newTitle:string){
+		const product = products.find(el=>el.id === productId)
+		if (product){
+			product.title=newTitle
+		}
+		return product
+	},
+
 }
