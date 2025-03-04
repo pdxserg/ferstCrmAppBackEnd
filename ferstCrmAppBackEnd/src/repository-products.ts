@@ -25,6 +25,8 @@ export const repositoryProducts = {
 		if (product) {
 			product.title = newTitle
 			return true
+		}else {
+			return false
 		}
 	},
 	deleteProductById(productId: string) {
@@ -32,6 +34,8 @@ export const repositoryProducts = {
 		if (index !== -1) {
 			products.splice(index, 1);
 			return true
+		} else {
+			return false
 		}
 	},
 

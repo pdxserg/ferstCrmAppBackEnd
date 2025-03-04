@@ -8,9 +8,18 @@ const products_router_1 = require("./Routes/products-router");
 const adresses_router_1 = require("./Routes/adresses-router");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+//MiddleWare
+// const authGuardMidlWare=(req:Request, res:Response,next:NextFunction)=>{
+//     if(req.query.token ==="123")return next()
+//     else return res
+// }
+// app.use(authGuardMidlWare)
 const port = 5000;
-app.use('/products', products_router_1.productsRouter);
-app.use('/adresses', adresses_router_1.adressesRouter);
+app.use('/products', products_router_1.productsRouter),
+    app.use('/adresses', adresses_router_1.adressesRouter);
+app.use('/ad', (req, res) => {
+    res.send({ "AA": "hey" });
+});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

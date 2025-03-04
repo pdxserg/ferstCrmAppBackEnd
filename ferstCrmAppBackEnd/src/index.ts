@@ -1,4 +1,4 @@
-import express from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {productsRouter} from "./Routes/products-router";
 import {adressesRouter} from "./Routes/adresses-router";
 
@@ -6,10 +6,21 @@ import {adressesRouter} from "./Routes/adresses-router";
 
 const app = express()
 app.use(express.json());
+
+//MiddleWare
+// const authGuardMidlWare=(req:Request, res:Response,next:NextFunction)=>{
+//     if(req.query.token ==="123") next()
+//     else   res.sent(404)
+// }
+// app.use(authGuardMidlWare)
+
 const port = 5000
 
-app.use('/products', productsRouter)
+app.use('/products', productsRouter),
 app.use('/adresses', adressesRouter)
+app.use('/ad', (req:Request, res:Response)=>{
+res.send({"AA":"hey"})
+})
 
 
 app.listen(port, () => {
