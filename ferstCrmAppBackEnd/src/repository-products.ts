@@ -1,7 +1,6 @@
+const products = [{id: "1", title: "tomato"}, {id: "2", title: "orange"},]
 
-const products = [{id:"1",title: "tomato"}, {id:"2",title: "orange"},]
-
-export  const repositoryProducts = {
+export const repositoryProducts = {
 	findProducts(title: string | null | undefined) {
 		if (title) {
 			const searchProducts = products.filter(el => el.title.toLowerCase().includes(title.toLowerCase()))
@@ -11,22 +10,29 @@ export  const repositoryProducts = {
 		}
 	},
 	createProduct(title: string) {
-			const generateId = () => Math.random().toString(36).slice(2, 9);
-			const newProduct = {id: generateId(), title: title}
-			products.unshift(newProduct)
-			return newProduct
+		const generateId = () => Math.random().toString(36).slice(2, 9);
+		const newProduct = {id: generateId(), title: title}
+		products.unshift(newProduct)
+		return newProduct
 
 	},
-	getProductById(productId:string){
-		const product = products.find(el=>el.id === productId)
+	getProductById(productId: string) {
+		const product = products.find(el => el.id === productId)
 		return product
 	},
-	updateProductById(productId:string,newTitle:string){
-		const product = products.find(el=>el.id === productId)
-		if (product){
-			product.title=newTitle
+	updateProductById(productId: string, newTitle: string) {
+		const product = products.find(el => el.id === productId)
+		if (product) {
+			product.title = newTitle
+			return true
 		}
-		return product
+	},
+	deleteProductById(productId: string) {
+		const index = products.findIndex(el => el.id === productId);
+		if (index !== -1) {
+			products.splice(index, 1);
+			return true
+		}
 	},
 
 }

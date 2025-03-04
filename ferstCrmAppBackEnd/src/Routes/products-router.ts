@@ -27,9 +27,10 @@ productsRouter.post('/', (req:Request, res:Response) => {
 		}
 });
 productsRouter.put('/:id', (req:Request, res:Response) => {
-const newTitle=req.body.title?.trim()
-	const product  =repositoryProducts.updateProductById( req.params.id, newTitle)
-	if(product){
+const newTitle=req.body.title.trim()
+	const isUpdated  =repositoryProducts.updateProductById( req.params.id, newTitle)
+	if(isUpdated){
+		const product  = repositoryProducts.getProductById(req.params.id)
 		res.send({ message: "Product updated successfully" ,product});
 	} else {
 		res.status(404).send({ error: "Product not found!!!" });
@@ -37,9 +38,8 @@ const newTitle=req.body.title?.trim()
 });
 productsRouter.delete('/:id', (req: Request, res: Response) => {
 	const productId = req.params.id;
-	const index = products.findIndex(el => el.id === productId);
-	if (index !== -1) {
-		products.splice(index, 1);
+	const isDeleted = repositoryProducts.deleteProductById(productId)
+	if (isDeleted) {
 		res.status(204).send({ message: "Product deleted successfully" });
 	} else {
 		res.status(404).send({ error: "Product not found!!!" });
