@@ -9,16 +9,16 @@ export const repositoryProducts = {
 			return products
 		}
 	},
+	getProductById(productId: string) {
+		const product = products.find(el => el.id === productId)
+		return product
+	},
 	createProduct(title: string) {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newProduct = {id: generateId(), title: title}
 		products.unshift(newProduct)
 		return newProduct
 
-	},
-	getProductById(productId: string) {
-		const product = products.find(el => el.id === productId)
-		return product
 	},
 	updateProductById(productId: string, newTitle: string) {
 		const product = products.find(el => el.id === productId)
