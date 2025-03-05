@@ -1,12 +1,14 @@
 import express, {NextFunction, Request, Response} from "express";
 import {productsRouter} from "./Routes/products-router";
 import {adressesRouter} from "./Routes/adresses-router";
+import {connectDB} from "./db";
 
 
 
 
 const app = express()
 app.use(express.json());
+connectDB(); // Подключаемся к MongoDB
 
 //MiddleWare
 // const authGuardMidlWare=(req:Request, res:Response,next:NextFunction)=>{

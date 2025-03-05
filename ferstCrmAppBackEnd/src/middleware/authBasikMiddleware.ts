@@ -30,4 +30,3 @@ export const basicAuthMiddleware = (req: Request, res: Response, next: NextFunct
 	next(); // Только если всё ок, идём дальше
 };
 
- // i9q4o1JriJvAgnNM pdxserg
