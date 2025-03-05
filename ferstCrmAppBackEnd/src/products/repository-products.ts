@@ -1,17 +1,27 @@
-import mongoose from "mongoose";
+import {Product} from "./model-products";
 
+export const repositoryProducts = {
+	async findProducts(title: string | null | undefined) {
+		if (title) {
+			const searchProducts = await Product.find({title: new RegExp(title, "i")}); // Поиск по названию
+			return searchProducts
+		} else {
+			return await Product.find();
+		}
+	},
+	async createProduct(title: string) {
+		const generateId = () => Math.random().toString(36).slice(2, 9);
+		const newProduct = new Product({ title,id: generateId()});
+		await newProduct.save();
+		return newProduct;
+	},
 
+	// const generateId = () => Math.random().toString(36).slice(2, 9);
+// 		const newProduct = {id: generateId(), title: title}
+// 		products.unshift(newProduct)
+// 		return newProduct
 
-// Определяем схему продукта
-const productSchema = new mongoose.Schema({
-	title: { type: String, required: true },
-});
-
-// Создаем модель
-export const Product = mongoose.model("Product", productSchema);
-
-
-export const repositoryProducts = {}
+}
 
 // old code, local storage in file
 

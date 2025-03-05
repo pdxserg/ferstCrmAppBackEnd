@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {repositoryProducts} from "../repository-products";
+import {repositoryProducts} from "../products/repository-products";
 import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 
 
