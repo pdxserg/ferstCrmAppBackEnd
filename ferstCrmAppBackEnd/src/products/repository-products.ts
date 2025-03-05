@@ -1,15 +1,15 @@
-import {Product} from "./model-products";
+import {IProduct, Product} from "./model-products";
 
 export const repositoryProducts = {
-	async findProducts(title: string | null | undefined) {
+	async findProducts(title: string | null | undefined):Promise<IProduct[]> {
 		if (title) {
-			const searchProducts = await Product.find({title: new RegExp(title, "i")}); // Поиск по названию
+			const searchProducts =  Product.find({title: new RegExp(title, "i")}); // Поиск по названию
 			return searchProducts
 		} else {
-			return await Product.find();
+			return  Product.find();
 		}
 	},
-	async createProduct(title: string) {
+	async createProduct(title: string):Promise<IProduct> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newProduct = new Product({ title,id: generateId()});
 		await newProduct.save();

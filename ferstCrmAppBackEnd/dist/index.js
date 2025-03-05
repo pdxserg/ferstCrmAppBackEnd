@@ -17,8 +17,8 @@ app.use(express_1.default.json());
 // }
 // app.use(authGuardMidlWare)
 const port = 5000;
-app.use('/products', products_router_1.productsRouter),
-    app.use('/adresses', adresses_router_1.adressesRouter);
+app.use('/products', products_router_1.productsRouter);
+app.use('/adresses', adresses_router_1.adressesRouter);
 app.use('/ad', (req, res) => {
     res.send({ "AA": "hey" });
 });

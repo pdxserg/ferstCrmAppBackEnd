@@ -21,7 +21,7 @@ connectDB(); // Подключаемся к MongoDB
 
 const port = 5000
 
-app.use('/products',  productsRouter),
+app.use('/products',  productsRouter)
 app.use('/adresses', adressesRouter)
 app.use('/ad', (req:Request, res:Response)=>{
 res.send({"AA":"hey"})
