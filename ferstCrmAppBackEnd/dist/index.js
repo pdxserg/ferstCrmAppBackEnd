@@ -10,8 +10,8 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 //MiddleWare
 // const authGuardMidlWare=(req:Request, res:Response,next:NextFunction)=>{
-//     if(req.query.token ==="123")return next()
-//     else return res
+//     if(req.query.token ==="123") next()
+//     else   res.sent(404)
 // }
 // app.use(authGuardMidlWare)
 const port = 5000;

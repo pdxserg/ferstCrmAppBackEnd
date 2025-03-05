@@ -1,5 +1,8 @@
 import {Request, Response, Router} from "express";
 import {repositoryProducts} from "../repository-products";
+import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
+
+
 
 
 export const productsRouter = Router()
@@ -36,11 +39,11 @@ const newTitle=req.body.title.trim()
 		res.status(404).send({ error: "Product not found!!!" });
 	}
 });
-productsRouter.delete('/:id', (req: Request, res: Response) => {
+productsRouter.delete('/:id', basicAuthMiddleware, (req: Request, res: Response) => {
 	const productId = req.params.id;
 	const isDeleted = repositoryProducts.deleteProductById(productId)
 	if (isDeleted) {
-		res.status(204).send({ message: "Product deleted successfully" });
+		res.status(204).json({ message: "Product deleted successfully" });
 	} else {
 		res.status(404).send({ error: "Product not found!!!" });
 	}

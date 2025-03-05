@@ -4,6 +4,7 @@ import {adressesRouter} from "./Routes/adresses-router";
 
 
 
+
 const app = express()
 app.use(express.json());
 
@@ -14,9 +15,11 @@ app.use(express.json());
 // }
 // app.use(authGuardMidlWare)
 
+
+
 const port = 5000
 
-app.use('/products', productsRouter),
+app.use('/products',  productsRouter),
 app.use('/adresses', adressesRouter)
 app.use('/ad', (req:Request, res:Response)=>{
 res.send({"AA":"hey"})
@@ -26,6 +29,13 @@ res.send({"AA":"hey"})
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+
+
+
+
+
+
 // debugger
 // https://www.youtube.com/watch?v=vWMjPRiEhbA    7:54
 ///example GPT
