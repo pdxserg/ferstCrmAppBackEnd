@@ -1,4 +1,4 @@
-import {Request, Response, Router} from "express";
+import {NextFunction, Request, Response, Router} from "express";
 import {repositoryProducts} from "../products/repository-products";
 import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 
@@ -11,16 +11,35 @@ productsRouter.get('/', async (req:Request, res:Response) => {
 	const foundProducts = await repositoryProducts.findProducts(req.query.title?.toString())
 	res.send(foundProducts)
 });
-productsRouter.post('/', async (req: Request, res: Response) => {
-	const title = req.body.title?.trim()
-	const createdProduct = await repositoryProducts.createProduct(title)
+// productsRouter.post('/', async (req: Request, res: Response) => {
+// 	const title = req.body.title?.trim()
+// 	const createdProduct = await repositoryProducts.createProduct(title)
+// 	if (createdProduct) {
+// 		res.send(createdProduct)
+// 	} else {
+// 		res.status(400).send({error: "Product not created!!!"});
+// 	}
+// });
+
+productsRouter.post('/',  async (req: Request, res: Response) => {
+	const title = req.body.title?.trim();
+	// if (!title) {
+	// 	return res.status(400).send({ error: "Title is required!" });
+	// }
+	// try {
+	// 	const createdProduct =  repositoryProducts.createProduct(title);
+	// 	res.status(201).send(createdProduct);
+	// } catch (error) {
+	// 	res.status(500).send({ error: "Internal Server Error" });
+	// }
+	const createProduct = await repositoryProducts.createProduct(title)
 	if (title) {
-		res.send(createdProduct)
+		res.send(createProduct)
 	} else {
 		res.status(400).send({error: "Product not created!!!"});
 	}
-});
 
+});
 
 
 

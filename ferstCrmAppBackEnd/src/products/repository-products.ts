@@ -20,11 +20,11 @@ export const repositoryProducts = {
 	},
 	async createProduct(title: string):Promise<IProduct> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
-		const newProduct = {
+		const newProduct =new Product ({
 			title,
-			id: generateId()}
-const result= await Product.insertOne(newProduct)
-		return result;
+			id: generateId()})
+		await newProduct.save();
+		return newProduct;
 	},
 	async updateProductById(productId: string, newTitle: string):Promise<boolean> {
 		const updatedProduct = await Product.findByIdAndUpdate(

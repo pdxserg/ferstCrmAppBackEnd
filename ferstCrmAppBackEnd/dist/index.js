@@ -28,12 +28,19 @@ const port = 5000;
 app.use('/products', products_router_1.productsRouter);
 app.use('/adresses', adresses_router_1.adressesRouter);
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, db_1.connectDB)(); // Подключаемся к MongoDB
-    app.listen(port, () => {
-        console.log(`Example app listening on port ${port}`);
-    });
+    try {
+        yield (0, db_1.connectDB)(); // Дожидаемся подключения к MongoDB
+        app.listen(port, () => {
+            console.log(`🚀 Server running on port ${port}`);
+        });
+    }
+    catch (error) {
+        console.error("❌ Failed to connect to MongoDB:", error);
+        process.exit(1); // Завершаем процесс при ошибке
+    }
 });
-startApp();
+// Запускаем сервер
+void startApp();
 // debugger
 // https://www.youtube.com/watch?v=vWMjPRiEhbA    7:54
 ///example GPT
