@@ -8,7 +8,6 @@ import {connectDB} from "./db";
 
 const app = express()
 app.use(express.json());
-connectDB(); // Подключаемся к MongoDB
 
 //MiddleWare
 // const authGuardMidlWare=(req:Request, res:Response,next:NextFunction)=>{
@@ -23,14 +22,15 @@ const port = 5000
 
 app.use('/products',  productsRouter)
 app.use('/adresses', adressesRouter)
-app.use('/ad', (req:Request, res:Response)=>{
-res.send({"AA":"hey"})
-})
 
+const startApp=   async () => {
+    await connectDB(); // Подключаемся к MongoDB
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`)
+    })
+}
+startApp()
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
 
 
 

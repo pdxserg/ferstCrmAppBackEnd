@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config(); // Загружаем переменные окружения из .env
+dotenv.config(); // Загружаем перемен ные окружения из .env
 
 // const MONGO_URI = process.env.MONGO_URI as string;
 

@@ -25,30 +25,32 @@ productsRouter.post('/', async (req: Request, res: Response) => {
 
 
 
-// productsRouter.get('/:id', (req:Request, res:Response) => {
-// const product  = repositoryProducts.getProductById(req.params.id)
-// 	if (product){
-// 			res.send(product);
-// 		} else {
-// 			res.status(404).send({error: "Not found!!!"})
-// 		}
-// });
-// productsRouter.put('/:id', (req:Request, res:Response) => {
-// const newTitle=req.body.title.trim()
-// 	const isUpdated  =repositoryProducts.updateProductById( req.params.id, newTitle)
-// 	if(isUpdated){
-// 		const product  = repositoryProducts.getProductById(req.params.id)
-// 		res.send({ message: "Product updated successfully" ,product});
-// 	} else {
-// 		res.status(404).send({ error: "Product not found!!!" });
-// 	}
-// });
-// productsRouter.delete('/:id', basicAuthMiddleware, (req: Request, res: Response) => {
+productsRouter.get('/:id', async (req:Request, res:Response) => {
+const product  =await repositoryProducts.getProductById(req.params.id)
+	if (product){
+			res.send(product);
+		} else {
+			res.status(404).send({error: "Not found!!!"})
+		}
+});
+productsRouter.put('/:id', async (req: Request, res: Response) => {
+	const newTitle = req.body.title.trim()
+	const isUpdated = await repositoryProducts.updateProductById(req.params.id, newTitle)
+	if (isUpdated) {
+		const product = repositoryProducts.getProductById(req.params.id)
+		res.send({message: "Product updated successfully", product});
+	} else {
+		res.status(404).send({error: "Product not found!!!"});
+	}
+});
+// productsRouter.delete('/:id',
+// 	// basicAuthMiddleware,
+// 	async (req: Request, res: Response) => {
 // 	const productId = req.params.id;
-// 	const isDeleted = repositoryProducts.deleteProductById(productId)
+// 	const isDeleted = await repositoryProducts.deleteProductById(productId)
 // 	if (isDeleted) {
-// 		res.status(204).json({ message: "Product deleted successfully" });
+// 		res.status(204).json({message: "Product deleted successfully"});
 // 	} else {
-// 		res.status(404).send({ error: "Product not found!!!" });
+// 		res.status(404).send({error: "Product not found!!!"});
 // 	}
 // });

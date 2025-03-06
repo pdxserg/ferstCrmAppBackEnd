@@ -9,17 +9,53 @@ export const repositoryProducts = {
 			return  Product.find();
 		}
 	},
+	async getProductById(id: string):Promise<IProduct | null> {
+		let product =await Product.findOne({id:id})
+		if(product){
+			return product
+		}else {
+			return null
+		}
+		// return Product.findById(id:productId);
+	},
 	async createProduct(title: string):Promise<IProduct> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
-		const newProduct = new Product({ title,id: generateId()});
-		await newProduct.save();
-		return newProduct;
+		const newProduct = {
+			title,
+			id: generateId()}
+const result= await Product.insertOne(newProduct)
+		return result;
+	},
+	async updateProductById(productId: string, newTitle: string):Promise<boolean> {
+		const updatedProduct = await Product.findByIdAndUpdate(
+			productId,
+			{ title: newTitle },
+			{ new: true }
+		);
+		return updatedProduct ? true : false;
 	},
 
-	// const generateId = () => Math.random().toString(36).slice(2, 9);
-// 		const newProduct = {id: generateId(), title: title}
-// 		products.unshift(newProduct)
-// 		return newProduct
+	// async deleteProductById(id: string):Promise<boolean> {
+		//  const deletedProduct = await Product.findByIdAndDelete(id);
+		// return deletedProduct ? true : false;
+		// const index =  Product.findIndex(el => el.id === id);
+		// if (index !== -1) {
+		// 	 Product.splice(index, 1);
+		// 	return true
+		// } else {
+		// 	return false
+		// }
+
+	// }
+	// deleteProductById(productId: string) {
+// 		const index = products.findIndex(el => el.id === productId);
+// 		if (index !== -1) {
+// 			products.splice(index, 1);
+// 			return true
+// 		} else {
+// 			return false
+// 		}
+// 	},
 
 }
 
