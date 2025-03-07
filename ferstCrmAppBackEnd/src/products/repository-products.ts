@@ -1,4 +1,5 @@
 import {IProduct, Product} from "./model-products";
+import mongoose from "mongoose";
 
 export const repositoryProducts = {
 	async findProducts(title: string | null | undefined):Promise<IProduct[]> {
@@ -16,7 +17,6 @@ export const repositoryProducts = {
 		}else {
 			return null
 		}
-		// return Product.findById(id:productId);
 	},
 	async createProduct(title: string):Promise<IProduct> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
@@ -26,14 +26,35 @@ export const repositoryProducts = {
 		await newProduct.save();
 		return newProduct;
 	},
-	async updateProductById(productId: string, newTitle: string):Promise<boolean> {
+
+
+	// В репозитории
+	async updateProductById(productId: string, newTitle: string): Promise<IProduct | false> {
 		const updatedProduct = await Product.findByIdAndUpdate(
 			productId,
 			{ title: newTitle },
-			{ new: true }
+			{ new: true, runValidators: true }
 		);
-		return updatedProduct ? true : false;
+
+		return updatedProduct || false;
 	},
+
+	// async updateProductById(productId: string, newTitle: string):Promise<boolean> {
+	// 	const updatedProduct = await Product.findByIdAndUpdate(
+	// 		productId,
+	// 		{ title: newTitle },
+	// 		{ new: true }
+	// 	);
+	// 	return updatedProduct ? true : false;
+	// },
+
+	async deleteProductById(id: string) {
+		console.log("Attempting to delete product with ID:", id);
+		const objectId = new mongoose.Types.ObjectId(id); // Convert to ObjectId if necessary
+		const deletedProduct = await Product.findByIdAndDelete(objectId);
+		console.log("Deleted product:", deletedProduct);
+		return deletedProduct ? true : false;
+	}
 
 	// async deleteProductById(id: string):Promise<boolean> {
 		//  const deletedProduct = await Product.findByIdAndDelete(id);
