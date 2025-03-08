@@ -30,8 +30,8 @@ export const repositoryProducts = {
 
 	// В репозитории
 	async updateProductById(productId: string, newTitle: string): Promise<IProduct | false> {
-		const updatedProduct = await Product.findByIdAndUpdate(
-			productId,
+		const updatedProduct = await Product.findOneAndUpdate(
+			{ id: productId },
 			{ title: newTitle },
 			{ new: true, runValidators: true }
 		);
