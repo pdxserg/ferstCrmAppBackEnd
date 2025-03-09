@@ -1,5 +1,4 @@
 import {IProduct, Product} from "./model-products";
-import mongoose from "mongoose";
 
 export const repositoryProducts = {
 	async findProducts(title: string | null | undefined):Promise<IProduct[]> {
@@ -39,14 +38,6 @@ export const repositoryProducts = {
 		// return updatedProduct || false;
 	},
 
-	// async updateProductById(productId: string, newTitle: string):Promise<boolean> {
-	// 	const updatedProduct = await Product.findByIdAndUpdate(
-	// 		productId,
-	// 		{ title: newTitle },
-	// 		{ new: true }
-	// 	);
-	// 	return updatedProduct ? true : false;
-	// },
 
 	async deleteProductById(id: string):Promise<boolean> {
 		const deletedProduct = await Product.findOneAndDelete({id});
