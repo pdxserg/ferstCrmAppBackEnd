@@ -61,37 +61,37 @@ productsRouter.post('/',  async (req: Request, res: Response) => {
 // });
 
 productsRouter.put('/:id', async (req: Request, res: Response) => {
-
-	const newTitle = req.body.title?.trim(); // Безопасная проверка
-	if (!newTitle) {
-		 res.status(400).send({ error: "Title is required!" });
-	}
-
-	try {
-		const updatedProduct = await repositoryProducts.updateProductById(req.params.id, newTitle);
-
-		if (updatedProduct) {
-			 res.send({ message: "Product updated successfully", product: updatedProduct });
-		} else {
-			 res.status(404).send({ error: "Product not found!!!" });
-		}
-	} catch (error) {
-		console.error("Update error:", error);
-		res.status(500).send({ error: "Internal Server Error11111" });
-	}
-
-
-
-	// const newTitle = req.body.title.trim();
-	// const isUpdated:boolean= await repositoryProducts.updateProductById(req.params.id, newTitle);
 	//
-	// if (isUpdated) {
-	// 	// Fetch updated product details
-	// 	const product = await repositoryProducts.getProductById(req.params.id);
-	// 	res.send({ message: "Product updated successfully", product });
-	// } else {
-	// 	res.status(404).send({ error: "Product not found!!!" });
+	// const newTitle = req.body.title?.trim(); // Безопасная проверка
+	// if (!newTitle) {
+	// 	 res.status(400).send({ error: "Title is required!" });
 	// }
+	//
+	// try {
+	// 	const updatedProduct = await repositoryProducts.updateProductById(req.params.id, newTitle);
+	//
+	// 	if (updatedProduct) {
+	// 		 res.send({ message: "Product updated successfully", product: updatedProduct });
+	// 	} else {
+	// 		 res.status(404).send({ error: "Product not found!!!" });
+	// 	}
+	// } catch (error) {
+	// 	console.error("Update error:", error);
+	// 	res.status(500).send({ error: "Internal Server Error11111" });
+	// }
+	//
+
+
+	const newTitle = req.body.title.trim();
+	const isUpdated:boolean= await repositoryProducts.updateProductById(req.params.id, newTitle);
+
+	if (isUpdated) {
+		// Fetch updated product details
+		const product = await repositoryProducts.getProductById(req.params.id);
+		res.send({ message: "Product updated successfully", product });
+	} else {
+		res.status(404).send({ error: "Product not found!!!" });
+	}
 });
 
 productsRouter.delete('/:id',
@@ -99,7 +99,7 @@ productsRouter.delete('/:id',
 	async (req: Request, res: Response) => {
 	const isDeleted = await repositoryProducts.deleteProductById(req.params.id)
 	if (isDeleted) {
-		res.status(204).json({message: "Product deleted successfully"});
+		res.status(204).send({message: "Product deleted successfully"});
 	} else {
 		res.status(404).send({error: "Product not found!!!"});
 	}

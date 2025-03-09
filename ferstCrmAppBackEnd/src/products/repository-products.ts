@@ -29,14 +29,14 @@ export const repositoryProducts = {
 
 
 	// В репозитории
-	async updateProductById(productId: string, newTitle: string): Promise<IProduct | false> {
+	async updateProductById(productId: string, newTitle: string): Promise<boolean> {
 		const updatedProduct = await Product.findOneAndUpdate(
 			{ id: productId },
 			{ title: newTitle },
 			{ new: true, runValidators: true }
 		);
-
-		return updatedProduct || false;
+		return updatedProduct ? true : false;
+		// return updatedProduct || false;
 	},
 
 	// async updateProductById(productId: string, newTitle: string):Promise<boolean> {
@@ -48,35 +48,11 @@ export const repositoryProducts = {
 	// 	return updatedProduct ? true : false;
 	// },
 
-	async deleteProductById(id: string) {
-		console.log("Attempting to delete product with ID:", id);
-		const objectId = new mongoose.Types.ObjectId(id); // Convert to ObjectId if necessary
-		const deletedProduct = await Product.findByIdAndDelete(objectId);
-		console.log("Deleted product:", deletedProduct);
+	async deleteProductById(id: string):Promise<boolean> {
+		const deletedProduct = await Product.findOneAndDelete({id});
 		return deletedProduct ? true : false;
 	}
 
-	// async deleteProductById(id: string):Promise<boolean> {
-		//  const deletedProduct = await Product.findByIdAndDelete(id);
-		// return deletedProduct ? true : false;
-		// const index =  Product.findIndex(el => el.id === id);
-		// if (index !== -1) {
-		// 	 Product.splice(index, 1);
-		// 	return true
-		// } else {
-		// 	return false
-		// }
-
-	// }
-	// deleteProductById(productId: string) {
-// 		const index = products.findIndex(el => el.id === productId);
-// 		if (index !== -1) {
-// 			products.splice(index, 1);
-// 			return true
-// 		} else {
-// 			return false
-// 		}
-// 	},
 
 }
 
