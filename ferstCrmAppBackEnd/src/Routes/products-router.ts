@@ -6,8 +6,8 @@ import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 export const productsRouter = Router()
 
 productsRouter.get('/', async (req: Request, res: Response) => {
-	const foundProducts = await repositoryProducts.findProducts(req.query.title?.toString())
-	res.send(foundProducts)
+	const {products, total } = await repositoryProducts.findProducts(req.query.title?.toString())
+	res.send({totalCount: total,resultCode:0, products})
 });
 productsRouter.get('/:id', async (req: Request, res: Response) => {
 	const product = await repositoryProducts.getProductById(req.params.id)

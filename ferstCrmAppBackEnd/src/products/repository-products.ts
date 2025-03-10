@@ -1,13 +1,14 @@
 import {IProduct, Product} from "./model-products";
+import {query} from "express";
 
 export const repositoryProducts = {
-	async findProducts(title: string | null | undefined):Promise<IProduct[]> {
-		if (title) {
-			const searchProducts =  Product.find({title: new RegExp(title, "i")}); // Поиск по названию
-			return searchProducts
-		} else {
-			return  Product.find();
-		}
+	async findProducts(title: string | null | undefined):Promise<{ products:IProduct[], total:number }> {
+		const query = title ? { title: new RegExp(title, "i") } : {}; // Условие поиска
+
+		const products = await Product.find(query); // Ищем продукты по названию (если есть)
+		const total = await Product.countDocuments(query); // Подсчитываем количество
+
+		return { products, total };
 	},
 	async getProductById(id: string):Promise<IProduct | null> {
 		let product =await Product.findOne({id:id})
