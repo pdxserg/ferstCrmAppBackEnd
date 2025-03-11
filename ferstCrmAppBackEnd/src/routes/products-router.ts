@@ -1,3 +1,16 @@
+
+/**
+ *  @openapi
+ * /products/{id}:
+ *   get:
+ *     description: Retrieve a single product by its unique ID.
+ *     responses:
+ *       200:
+ *         description: Product found
+ *       404:
+ *         description: Product not found
+ */
+
 import {Request, Response, Router} from "express";
 import {repositoryProducts} from "../products/repository-products";
 import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
@@ -9,6 +22,9 @@ productsRouter.get('/', async (req: Request, res: Response) => {
 	const {products, total } = await repositoryProducts.findProducts(req.query.title?.toString())
 	res.send({totalCount: total,resultCode:0, products})
 });
+
+
+
 productsRouter.get('/:id', async (req: Request, res: Response) => {
 	const product = await repositoryProducts.getProductById(req.params.id)
 	if (product) {

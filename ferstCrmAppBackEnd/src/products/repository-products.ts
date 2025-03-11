@@ -10,6 +10,8 @@ export const repositoryProducts = {
 
 		return { products, total };
 	},
+
+
 	async getProductById(id: string):Promise<IProduct | null> {
 		let product =await Product.findOne({id:id})
 		if(product){
