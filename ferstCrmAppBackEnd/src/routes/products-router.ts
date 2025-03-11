@@ -1,16 +1,3 @@
-
-/**
- *  @openapi
- * /products/{id}:
- *   get:
- *     description: Retrieve a single product by its unique ID.
- *     responses:
- *       200:
- *         description: Product found
- *       404:
- *         description: Product not found
- */
-
 import {Request, Response, Router} from "express";
 import {repositoryProducts} from "../products/repository-products";
 import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
@@ -21,6 +8,8 @@ export const productsRouter = Router()
  * @openapi
  * /api/products:
  *   get:
+ *     tags:
+ *       - Products
  *     summary: Get all products
  *     description: Retrieve a list of all products.
  *     parameters:
@@ -32,14 +21,79 @@ export const productsRouter = Router()
  *     responses:
  *       200:
  *         description: A list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalCount:
+ *                   type: number
+ *                   example: "34"
+ *                 resultCode:
+ *                   type: number
+ *                   example: "0"
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "1234kn234"
+ *                       title:
+ *                         type: string
+ *                         example: "string"
+ *                       createdAt:
+ *                         type: string
+ *                         example: "2025-03-11T14:00:27.238Z"
  */
 productsRouter.get('/', async (req: Request, res: Response) => {
-	const {products, total } = await repositoryProducts.findProducts(req.query.title?.toString())
-	res.send({totalCount: total,resultCode:0, products})
+	const {products, total} = await repositoryProducts.findProducts(req.query.title?.toString())
+	res.send({totalCount: total, resultCode: 0, products})
 });
 
-
-
+/**
+ *  @openapi
+ * /products/{id}:
+ *   get:
+ *     tags:
+ *       - Products
+ *     description: Retrieve a single product by its unique ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the product
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "1234kn234"
+ *                 title:
+ *                   type: string
+ *                   example: "string"
+ *                 createdAt:
+ *                   type: string
+ *                   example: "2025-03-11T14:00:27.238Z"
+ *       404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Product not found!!!"
+ */
 productsRouter.get('/:id', async (req: Request, res: Response) => {
 	const product = await repositoryProducts.getProductById(req.params.id)
 	if (product) {
@@ -54,6 +108,8 @@ productsRouter.get('/:id', async (req: Request, res: Response) => {
  * @openapi
  * /api/products:
  *   post:
+ *     tags:
+ *       - Products
  *     summary: Create a new product
  *     description: Add a new product to the database.
  *     requestBody:
@@ -71,25 +127,108 @@ productsRouter.get('/:id', async (req: Request, res: Response) => {
  *     responses:
  *       201:
  *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "1234kn234"
+ *                 title:
+ *                   type: string
+ *                   example: "string"
+ *                 createdAt:
+ *                   type: string
+ *                   example: "2025-03-11T14:00:27.238Z"
  *       400:
  *         description: Title is required
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Title is required!!!"
  *       500:
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal Server Error!!!"
  */
 productsRouter.post('/', async (req: Request, res: Response) => {
 	const title = req.body.title?.trim();
 	if (!title) {
-		 res.status(400).send({ error: "Title is required!" });
+		res.status(400).send({error: "Title is required!"});
 	}
 	try {
 		const createdProduct = await repositoryProducts.createProduct(title);
-		 res.status(201).send(createdProduct);
+		res.status(201).send(createdProduct);
 	} catch (error) {
-		res.status(500).send({ error: "Internal Server Error" });
+		res.status(500).send({error: "Internal Server Error"});
 	}
 });
 
-
+/**
+ * @openapi
+ * /api/products/{id}:
+ *   put:
+ *     tags:
+ *       - Products
+ *     summary: Update a product by ID
+ *     description: Update a product from the database.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the product
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *             properties:
+ *               title:
+ *                 type: string
+ *     responses:
+ *      200:
+ *        description: Product Update successfully
+ *        content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "1234kn234"
+ *                 title:
+ *                   type: string
+ *                   example: "string"
+ *                 createdAt:
+ *                   type: string
+ *                   example: "2025-03-11T14:00:27.238Z"
+ *      404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Product not found!!!"
+ */
 productsRouter.put('/:id', async (req: Request, res: Response) => {
 	//
 	// const newTitle = req.body.title?.trim(); // Безопасная проверка
@@ -124,11 +263,12 @@ productsRouter.put('/:id', async (req: Request, res: Response) => {
 });
 
 
-
 /**
  * @openapi
  * /api/products/{id}:
  *   delete:
+ *     tags:
+ *       - Products
  *     summary: Delete a product by ID
  *     description: Remove a product from the database.
  *     parameters:
@@ -143,11 +283,27 @@ productsRouter.put('/:id', async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Product deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Product deleted successfully"
  *       404:
  *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Product not found!!!"
  */
 productsRouter.delete('/:id',
-	  basicAuthMiddleware,
+	basicAuthMiddleware,
 	async (req: Request, res: Response) => {
 		const isDeleted = await repositoryProducts.deleteProductById(req.params.id)
 		if (isDeleted) {
