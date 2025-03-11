@@ -103,7 +103,7 @@ const swaggerOptions = {
 // Initialize Swagger Docs
 const swaggerDocs = (0, swagger_jsdoc_1.default)(swaggerOptions);
 app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocs));
-app.use('/products', products_router_1.productsRouter);
+app.use('/api/products', products_router_1.productsRouter);
 //
 // /**
 //  *  @openapi

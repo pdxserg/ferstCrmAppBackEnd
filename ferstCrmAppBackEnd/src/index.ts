@@ -105,7 +105,7 @@ const swaggerOptions = {
 // Initialize Swagger Docs
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use('/products',  productsRouter)
+app.use('/api/products',  productsRouter)
 
 //
 // /**

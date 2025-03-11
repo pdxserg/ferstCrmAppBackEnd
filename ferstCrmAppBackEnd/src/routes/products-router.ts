@@ -17,7 +17,22 @@ import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 
 
 export const productsRouter = Router()
-
+/**
+ * @openapi
+ * /api/products:
+ *   get:
+ *     summary: Get all products
+ *     description: Retrieve a list of all products.
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Filter products by title
+ *     responses:
+ *       200:
+ *         description: A list of products
+ */
 productsRouter.get('/', async (req: Request, res: Response) => {
 	const {products, total } = await repositoryProducts.findProducts(req.query.title?.toString())
 	res.send({totalCount: total,resultCode:0, products})
@@ -33,6 +48,34 @@ productsRouter.get('/:id', async (req: Request, res: Response) => {
 		res.status(404).send({error: "Not found!!!"})
 	}
 });
+
+
+/**
+ * @openapi
+ * /api/products:
+ *   post:
+ *     summary: Create a new product
+ *     description: Add a new product to the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "New Product"
+ *     responses:
+ *       201:
+ *         description: Product created successfully
+ *       400:
+ *         description: Title is required
+ *       500:
+ *         description: Internal Server Error
+ */
 productsRouter.post('/', async (req: Request, res: Response) => {
 	const title = req.body.title?.trim();
 	if (!title) {
@@ -80,6 +123,29 @@ productsRouter.put('/:id', async (req: Request, res: Response) => {
 	}
 });
 
+
+
+/**
+ * @openapi
+ * /api/products/{id}:
+ *   delete:
+ *     summary: Delete a product by ID
+ *     description: Remove a product from the database.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the product to delete
+ *     security:
+ *       - basicAuth: []
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *       404:
+ *         description: Product not found
+ */
 productsRouter.delete('/:id',
 	  basicAuthMiddleware,
 	async (req: Request, res: Response) => {
