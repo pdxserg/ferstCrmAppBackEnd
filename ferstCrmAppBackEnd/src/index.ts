@@ -4,8 +4,9 @@ import {connectDB} from "./db";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"
 import path from "path";
+import cors from "cors";
 
-
+const port = 5000
 const app = express()
 app.use(express.json());
 
@@ -15,10 +16,10 @@ app.use(express.json());
 //     else   res.sent(404)
 // }
 // app.use(authGuardMidlWare)
+app.use(cors());
 
 
 
-const port = 5000
 
 // Swagger Options
 const swaggerOptions = {
