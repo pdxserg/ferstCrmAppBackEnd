@@ -18,6 +18,8 @@ const db_1 = require("./db");
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const path_1 = __importDefault(require("path"));
+const cors_1 = __importDefault(require("cors"));
+const port = 5000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 //MiddleWare
@@ -26,7 +28,10 @@ app.use(express_1.default.json());
 //     else   res.sent(404)
 // }
 // app.use(authGuardMidlWare)
-const port = 5000;
+app.use((0, cors_1.default)({
+    origin: 'https://first-crm-app-front-end.vercel.app/', // Указываем URL фронтенда на Vercel
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 // Swagger Options
 const swaggerOptions = {
     definition: {
