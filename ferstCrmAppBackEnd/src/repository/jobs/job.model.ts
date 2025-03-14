@@ -7,7 +7,6 @@ export interface Ijob extends Document {
 	customerEmail: string
 	customerPhone: number
 	jobDetails: string
-	createdAt: Date;
 }
 
 // Определяем схему продукта
@@ -19,7 +18,6 @@ const jobSchema = new mongoose.Schema({
 	customerEmail: { type: String, required: true },
 	customerPhone: { type: Number, required: true },
 	jobDetails: { type: String, required: true },
-	createdAt: { type: Date, default: Date.now },
 
 });
 
