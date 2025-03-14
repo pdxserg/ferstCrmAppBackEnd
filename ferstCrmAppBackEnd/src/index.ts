@@ -44,6 +44,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 app.use('/api/products',  productsRouter)
+app.use('/api/jobs',  productsRouter)
 // app.use('/adresses', adressesRouter)
 
 const startApp = async () => {

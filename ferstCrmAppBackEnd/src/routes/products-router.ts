@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {repositoryProducts} from "../products/repository-products";
+import {repositoryProducts} from "../repository/products/repository-products";
 import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 
 
@@ -303,7 +303,7 @@ productsRouter.put('/:id', async (req: Request, res: Response) => {
  *                   example: "Product not found!!!"
  */
 productsRouter.delete('/:id',
-	basicAuthMiddleware,
+	// basicAuthMiddleware,
 	async (req: Request, res: Response) => {
 		const isDeleted = await repositoryProducts.deleteProductById(req.params.id)
 		if (isDeleted) {
