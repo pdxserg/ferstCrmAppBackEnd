@@ -54,55 +54,11 @@ export const repositoryJobs = {
 	// 	// return updatedProduct || false;
 	// },
 	//
-	//
-	// async deleteProductById(id: string):Promise<boolean> {
-	// 	const deletedProduct = await Product.findOneAndDelete({id});
-	// 	return deletedProduct ? true : false;
-	// }
+
+	async deleteJobById(id: string):Promise<boolean> {
+		const deletedJob = await Job.findOneAndDelete({id});
+		return deletedJob ? true : false;
+	}
 
 
 }
-
-// old code, local storage in file
-
-// const products = [{id: "1", title: "tomato"}, {id: "2", title: "orange"},]
-// export const repositoryProducts = {
-// 	findProducts(title: string | null | undefined) {
-// 		if (title) {
-// 			const searchProducts = products.filter(el => el.title.toLowerCase().includes(title.toLowerCase()))
-// 			return searchProducts
-// 		} else {
-// 			return products
-// 		}
-// 	},
-// 	getProductById(productId: string) {
-// 		const product = products.find(el => el.id === productId)
-// 		return product
-// 	},
-// 	createProduct(title: string) {
-// 		const generateId = () => Math.random().toString(36).slice(2, 9);
-// 		const newProduct = {id: generateId(), title: title}
-// 		products.unshift(newProduct)
-// 		return newProduct
-//
-// 	},
-// 	updateProductById(productId: string, newTitle: string) {
-// 		const product = products.find(el => el.id === productId)
-// 		if (product) {
-// 			product.title = newTitle
-// 			return true
-// 		}else {
-// 			return false
-// 		}
-// 	},
-// 	deleteProductById(productId: string) {
-// 		const index = products.findIndex(el => el.id === productId);
-// 		if (index !== -1) {
-// 			products.splice(index, 1);
-// 			return true
-// 		} else {
-// 			return false
-// 		}
-// 	},
-//
-// }
