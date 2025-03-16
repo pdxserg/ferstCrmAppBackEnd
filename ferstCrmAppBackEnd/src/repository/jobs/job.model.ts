@@ -12,7 +12,6 @@ export interface Ijob extends Document {
 // Определяем схему продукта
 const jobSchema = new mongoose.Schema({
 	id: { type: String, required: true, unique: true },
-	title: { type: String, required: true },
 	jobNumber: { type: Number, required: true },
 	customerName: { type: String, required: true },
 	customerEmail: { type: String, required: true },

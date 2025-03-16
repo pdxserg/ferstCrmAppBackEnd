@@ -19,6 +19,7 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
+const jobs_router_1 = require("./routes/jobs-router");
 const port = 5000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -48,6 +49,7 @@ const swaggerOptions = {
 const swaggerDocs = (0, swagger_jsdoc_1.default)(swaggerOptions);
 app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocs));
 app.use('/api/products', products_router_1.productsRouter);
+app.use('/api/jobs', jobs_router_1.jobsRouter);
 // app.use('/adresses', adressesRouter)
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

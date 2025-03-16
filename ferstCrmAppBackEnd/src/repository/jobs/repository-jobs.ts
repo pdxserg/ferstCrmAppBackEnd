@@ -35,8 +35,7 @@ export const repositoryJobs = {
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
-			jobDetails: args.jobDetails,
-			createdAt: new Date(), // Добавляем текущую дату
+			jobDetails:args.jobDetails
 		})
 		await newJob.save();
 		return newJob;

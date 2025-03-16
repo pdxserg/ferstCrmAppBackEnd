@@ -5,6 +5,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"
 import path from "path";
 import cors from "cors";
+import {jobsRouter} from "./routes/jobs-router";
 
 const port = 5000
 const app = express()
@@ -44,7 +45,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 app.use('/api/products',  productsRouter)
-app.use('/api/jobs',  productsRouter)
+app.use('/api/jobs',  jobsRouter)
 // app.use('/adresses', adressesRouter)
 
 const startApp = async () => {
