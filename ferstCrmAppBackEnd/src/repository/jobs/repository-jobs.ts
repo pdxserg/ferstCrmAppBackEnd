@@ -22,7 +22,7 @@ export const repositoryJobs = {
 	// },
 
 	async createJob(args: {
-		// jobNumber: number;
+		// jobNumber: string;
 		customerName: string;
 		customerEmail: string;
 		customerPhone: number;
@@ -31,7 +31,7 @@ export const repositoryJobs = {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob =new Job ({
 			id: generateId(),
-			// jobNumber: args.jobNumber,
+			jobNumber: "2323",
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
