@@ -30,7 +30,10 @@ app.use(express_1.default.json());
 // }
 // app.use(authGuardMidlWare)
 app.use((0, cors_1.default)({
-    origin: 'https://first-crm-app-front-end.vercel.app/', // Указываем URL фронтенда на Vercel
+    origin: [
+        'https://first-crm-app-front-end.vercel.app', // Указываем URL фронтенда на Vercel
+        'http://localhost:5173', // для локальной разработки (Vite)
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 // Swagger Options
