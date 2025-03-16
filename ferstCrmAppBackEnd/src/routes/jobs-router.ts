@@ -163,24 +163,24 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  */
 jobsRouter.post('/', async (req: Request, res: Response) => {
 
-	const jobNumber = req.body.jobNumber;
-	if (!jobNumber) {
-		res.status(400).send({error: "jobNumber is required!"});
-	}
-	const customerName = req.body.customerName;
+	// const jobNumber = req.body.jobNumber;
 	// if (!jobNumber) {
-	// 	res.status(400).send({error: "customerName is required!"});
+	// 	res.status(400).send({error: "jobNumber is required!"});
 	// }
+	const customerName = req.body.customerName;
+	if (!customerName) {
+		res.status(400).send({error: "customerName is required!"});
+	}
 	const customerEmail = req.body.customerEmail;
-	if (!jobNumber) {
+	if (!customerEmail) {
 		res.status(400).send({error: "customerEmail is required!"});
 	}
 	const customerPhone = req.body.customerPhone;
-	if (!jobNumber) {
+	if (!customerPhone) {
 		res.status(400).send({error: "customerPhone is required!"});
 	}
 	const jobDetails = req.body.jobDetails;
-	if (!jobNumber) {
+	if (!jobDetails) {
 		res.status(400).send({error: "jobDetails is required!"});
 	}
 
