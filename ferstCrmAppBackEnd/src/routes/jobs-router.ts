@@ -162,15 +162,15 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  *                   example: "Internal Server Error!!!"
  */
 jobsRouter.post('/', async (req: Request, res: Response) => {
-	debugger
+
 	const jobNumber = req.body.jobNumber;
 	if (!jobNumber) {
 		res.status(400).send({error: "jobNumber is required!"});
 	}
 	const customerName = req.body.customerName;
-	if (!jobNumber) {
-		res.status(400).send({error: "customerName is required!"});
-	}
+	// if (!jobNumber) {
+	// 	res.status(400).send({error: "customerName is required!"});
+	// }
 	const customerEmail = req.body.customerEmail;
 	if (!jobNumber) {
 		res.status(400).send({error: "customerEmail is required!"});
@@ -186,7 +186,7 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 
 	try {
 		const createdJob = await repositoryJobs.createJob({
-			jobNumber,
+			// jobNumber,
 			customerName,
 			customerEmail,
 			customerPhone,

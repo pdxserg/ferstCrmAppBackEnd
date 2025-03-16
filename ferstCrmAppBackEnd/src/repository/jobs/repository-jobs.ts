@@ -22,7 +22,7 @@ export const repositoryJobs = {
 	// },
 
 	async createJob(args: {
-		jobNumber: number;
+		// jobNumber: number;
 		customerName: string;
 		customerEmail: string;
 		customerPhone: number;
@@ -31,7 +31,7 @@ export const repositoryJobs = {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob =new Job ({
 			id: generateId(),
-			jobNumber: args.jobNumber,
+			// jobNumber: args.jobNumber,
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
@@ -56,7 +56,8 @@ export const repositoryJobs = {
 
 	async deleteJobById(id: string):Promise<boolean> {
 		const deletedJob = await Job.findOneAndDelete({id});
-		return deletedJob ? true : false;
+		return !!deletedJob; //it same (deletedJob ? true : false)
+
 	}
 
 
