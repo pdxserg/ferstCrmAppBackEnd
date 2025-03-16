@@ -37,8 +37,9 @@ export const repositoryJobs = {
 			customerPhone: args.customerPhone,
 			jobDetails:args.jobDetails
 		})
-		await newJob.save();
-		return newJob;
+		const savedJob = await newJob.save();
+		// Return the saved job with the jobNumber
+		return savedJob;
 	},
 
 	//
