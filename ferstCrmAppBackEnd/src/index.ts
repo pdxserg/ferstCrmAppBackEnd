@@ -18,7 +18,7 @@ app.use(express.json());
 // }
 // app.use(authGuardMidlWare)
 app.use(cors({
-    origin: 'https://first-crm-app-front-end.vercel.app/',  // Указываем URL фронтенда на Vercel
+    origin: 'https://first-crm-app-front-end.vercel.app',  // Указываем URL фронтенда на Vercel
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
