@@ -183,7 +183,7 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 	if (!jobDetails) {
 		res.status(400).send({error: "jobDetails is required!"});
 	}
-
+console.log(customerName,customerEmail,jobDetails)
 	try {
 		const createdJob = await repositoryJobs.createJob({
 			// jobNumber,
@@ -194,6 +194,7 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {
+		console.log(error)
 		res.status(500).send({error: "Internal Server Error11111"});
 	}
 });

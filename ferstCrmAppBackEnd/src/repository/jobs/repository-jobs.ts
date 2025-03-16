@@ -31,13 +31,14 @@ export const repositoryJobs = {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob =new Job ({
 			id: generateId(),
-			jobNumber: "2323",
+			// jobNumber: "2324",
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
 			jobDetails:args.jobDetails
 		})
 		const savedJob = await newJob.save();
+		console.log(savedJob)
 		// Return the saved job with the jobNumber
 		return savedJob;
 	},

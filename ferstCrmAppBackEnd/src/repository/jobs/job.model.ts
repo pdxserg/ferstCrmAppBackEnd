@@ -21,13 +21,13 @@ const jobSchema = new mongoose.Schema({
 });
 
 // Middleware to auto-generate jobNumber before saving a new job
-// jobSchema.pre<Ijob>("save", async function (next) {
-// 	if (!this.jobNumber) {
-// 		const lastJob = await Job.findOne().sort({ jobNumber: -1 }).lean();
-// 		const nextNumber = lastJob ? parseInt(lastJob.jobNumber, 10) + 1 : 1;
-// 		this.jobNumber = nextNumber.toString().padStart(4, "0"); // Format as 4-digit number
-// 	}
-// 	next();
-// });
+jobSchema.pre<Ijob>("save", async function (next) {
+	if (!this.jobNumber) {
+		const lastJob = await Job.findOne().sort({ jobNumber: -1 }).lean();
+		const nextNumber = lastJob ? parseInt(lastJob.jobNumber, 10) + 1 : 1;
+		this.jobNumber = nextNumber.toString().padStart(4, "0"); // Format as 4-digit number
+	}
+	next();
+});
 // Создаем модель
 export const Job = mongoose.model<Ijob>("Job", jobSchema);
