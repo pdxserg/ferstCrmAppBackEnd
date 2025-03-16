@@ -12,7 +12,7 @@ export interface Ijob extends Document {
 // Определяем схему продукта
 const jobSchema = new mongoose.Schema({
 	id: { type: String, required: true, unique: true },
-	jobNumber: { type: String, required: true, unique: true }, // Store as a string for leading zeros
+	jobNumber: { type: String },
 	customerName: { type: String, required: true },
 	customerEmail: { type: String, required: true },
 	customerPhone: { type: Number, required: true },
