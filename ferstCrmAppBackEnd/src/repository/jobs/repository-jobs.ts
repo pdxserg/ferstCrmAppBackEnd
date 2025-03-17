@@ -25,7 +25,7 @@ export const repositoryJobs = {
 		// jobNumber: string;
 		customerName: string;
 		customerEmail: string;
-		customerPhone: number;
+		customerPhone: string;
 		jobDetails: string;
 	}):Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);

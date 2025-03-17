@@ -5,7 +5,7 @@ export interface Ijob extends Document {
 	jobNumber: string
 	customerName: string
 	customerEmail: string
-	customerPhone: number
+	customerPhone: string
 	jobDetails: string
 }
 
@@ -15,7 +15,7 @@ const jobSchema = new mongoose.Schema({
 	jobNumber: { type: String },
 	customerName: { type: String, required: true },
 	customerEmail: { type: String, required: true },
-	customerPhone: { type: Number, required: true },
+	customerPhone: { type: String, required: true },
 	jobDetails: { type: String, required: true },
 
 });

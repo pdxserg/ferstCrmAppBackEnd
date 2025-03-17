@@ -163,10 +163,6 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  */
 jobsRouter.post('/', async (req: Request, res: Response) => {
 
-	// const jobNumber = req.body.jobNumber;
-	// if (!jobNumber) {
-	// 	res.status(400).send({error: "jobNumber is required!"});
-	// }
 	const customerName = req.body.customerName;
 	if (!customerName) {
 		res.status(400).send({error: "customerName is required!"});
@@ -186,7 +182,6 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 console.log(customerName,customerEmail,jobDetails)
 	try {
 		const createdJob = await repositoryJobs.createJob({
-			// jobNumber,
 			customerName,
 			customerEmail,
 			customerPhone,
