@@ -2,6 +2,7 @@ import {Request, Response, Router} from "express";
 import {repositoryJobs} from "../repository/jobs/repository-jobs";
 
 
+
 export const jobsRouter = Router()
 /**
  * @openapi
@@ -283,6 +284,22 @@ console.log(customerName,customerEmail,jobDetails)
 // 		res.status(404).send({error: "Product not found!!!"});
 // 	}
 // });
+
+
+jobsRouter.put('/:id', async (req: Request, res: Response) => {
+
+	const newDescription = req.body.jobDetails.trim();
+	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription);
+
+	if (isUpdated) {
+		// const product = await repositoryJobs.getProductById(req.params.id);
+		// res.send({message: "Product updated successfully", product});
+		res.send({message: "Product updated successfully"});
+	} else {
+		res.status(404).send({error: "Product not found!!!"});
+	}
+});
+
 
 
 /**

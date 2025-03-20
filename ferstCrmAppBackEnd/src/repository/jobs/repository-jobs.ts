@@ -38,23 +38,22 @@ export const repositoryJobs = {
 			jobDetails:args.jobDetails
 		})
 		const savedJob = await newJob.save();
-		console.log(savedJob)
 		// Return the saved job with the jobNumber
 		return savedJob;
 	},
 
-	//
-	// // В репозитории
-	// async updateProductById(productId: string, newTitle: string): Promise<boolean> {
-	// 	const updatedProduct = await Product.findOneAndUpdate(
-	// 		{ id: productId },
-	// 		{ title: newTitle },
-	// 		{ new: true, runValidators: true }
-	// 	);
-	// 	return updatedProduct ? true : false;
-	// 	// return updatedProduct || false;
-	// },
-	//
+
+	// В репозитории
+	async updateJobById(jobId: string, newDescription: string): Promise<boolean> {
+		const updatedJob = await Job.findOneAndUpdate(
+			{ id: jobId },
+			{ jobDetails: newDescription },
+			{ new: true, runValidators: true }
+		);
+		return updatedJob ? true : false;
+		// return updatedProduct || false;
+	},
+
 
 	async deleteJobById(id: string):Promise<boolean> {
 		const deletedJob = await Job.findOneAndDelete({id});
