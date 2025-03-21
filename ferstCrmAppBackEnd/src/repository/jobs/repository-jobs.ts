@@ -12,14 +12,14 @@ export const repositoryJobs = {
 	},
 
 
-	// async getProductById(id: string):Promise<IProduct | null> {
-	// 	let product =await Product.findOne({id:id})
-	// 	if(product){
-	// 		return product
-	// 	}else {
-	// 		return null
-	// 	}
-	// },
+	async getJobById(id: string):Promise<Ijob | null> {
+		let job =await Job.findOne({id:id})
+		if(job){
+			return job
+		}else {
+			return null
+		}
+	},
 
 	async createJob(args: {
 		// jobNumber: string;

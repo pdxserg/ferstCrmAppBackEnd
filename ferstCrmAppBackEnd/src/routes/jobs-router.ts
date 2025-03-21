@@ -180,7 +180,6 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 	if (!jobDetails) {
 		res.status(400).send({error: "jobDetails is required!"});
 	}
-console.log(customerName,customerEmail,jobDetails)
 	try {
 		const createdJob = await repositoryJobs.createJob({
 			customerName,
@@ -195,6 +194,14 @@ console.log(customerName,customerEmail,jobDetails)
 	}
 });
 
+jobsRouter.get('/:id', async (req: Request, res: Response) => {
+		const job = await repositoryJobs.getJobById(req.params.id)
+		if (job) {
+			res.json({message: "Job found!",job});
+		} else {
+			res.status(404).send({error: "Job not found!!!"});
+		}
+	});
 
 
 //
@@ -292,9 +299,9 @@ jobsRouter.put('/:id', async (req: Request, res: Response) => {
 	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription);
 
 	if (isUpdated) {
-		// const product = await repositoryJobs.getProductById(req.params.id);
-		// res.send({message: "Product updated successfully", product});
-		res.send({message: "Product updated successfully"});
+		const product = await repositoryJobs.getJobById(req.params.id);
+		res.send({message: "Product updated successfully", product});
+		// res.send({message: "Product updated successfully"});
 	} else {
 		res.status(404).send({error: "Product not found!!!"});
 	}
