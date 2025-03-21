@@ -7,7 +7,6 @@ export const repositoryJobs = {
 
 		const jobs = await Job.find(query); // Ищем продукты по названию (если есть)
 		const total = await Job.countDocuments(query); // Подсчитываем количество
-
 		return { jobs, total };
 	},
 
