@@ -1,5 +1,5 @@
 import {IProduct, Product} from "./model-products";
-import {query} from "express";
+
 
 export const repositoryProducts = {
 	async findProducts(title: string | null | undefined):Promise<{ products:IProduct[], total:number }> {

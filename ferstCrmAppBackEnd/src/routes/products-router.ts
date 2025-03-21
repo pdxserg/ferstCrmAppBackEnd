@@ -1,6 +1,5 @@
 import {Request, Response, Router} from "express";
 import {repositoryProducts} from "../repository/products/repository-products";
-import {basicAuthMiddleware} from "../middleware/authBasikMiddleware";
 
 
 export const productsRouter = Router()
