@@ -295,8 +295,9 @@ jobsRouter.get('/:id', async (req: Request, res: Response) => {
 
 jobsRouter.put('/:id', async (req: Request, res: Response) => {
 
-	const newDescription = req.body.jobDetails.trim();
-	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription);
+	const newDescription = req.body.jobDetails;
+	const newName = req.body.customerName;
+	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription, newName);
 
 	if (isUpdated) {
 		const product = await repositoryJobs.getJobById(req.params.id);
