@@ -48,7 +48,8 @@ export const jobsRouter = Router()
  *                         example: "2025-03-11T14:00:27.238Z"
  */
 jobsRouter.get('/', async (req: Request, res: Response) => {
-	const {jobs: items, total} = await repositoryJobs.findJobs(req.query.jobNumber?.toString())
+	const { searchTerm } = req.query;
+	const {jobs: items, total} = await repositoryJobs.findJobs(searchTerm?.toString());
 	res.send({totalCount: total, resultCode: 0, items})
 });
 
@@ -189,7 +190,6 @@ jobsRouter.post('/', async (req: Request, res: Response) => {
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {
-		console.log(error)
 		res.status(500).send({error: "Internal Server Error11111"});
 	}
 });
@@ -302,9 +302,8 @@ jobsRouter.put('/:id', async (req: Request, res: Response) => {
 	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription, newName, newPhone, newEmail);
 
 	if (isUpdated) {
-		const product = await repositoryJobs.getJobById(req.params.id);
-		res.send({message: "Product updated successfully", product});
-		// res.send({message: "Product updated successfully"});
+		const job = await repositoryJobs.getJobById(req.params.id);
+		res.send({message: "Product updated successfully", job});
 	} else {
 		res.status(404).send({error: "Product not found!!!"});
 	}

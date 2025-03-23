@@ -2,8 +2,22 @@ import {Ijob, Job} from "./job.model";
 
 
 export const repositoryJobs = {
-	async findJobs(jobNumber: string | null | undefined): Promise<{ jobs: Ijob[], total: number }> {
-		const query = jobNumber ? {jobNumber: new RegExp(jobNumber, "i")} : {}; // Условие поиска
+	async findJobs(searchTerm: string | null | undefined): Promise<{ jobs: Ijob[], total: number }> {
+		let query: any = {};
+
+		if (searchTerm) {
+			const regex = new RegExp(searchTerm, "i"); // Case-insensitive regex
+
+			query = {
+				$or: [ // Use $or to search in either jobNumber or customerName
+					{ jobNumber: regex },
+					{ customerName: regex },
+					{ customerPhone: regex },
+				],
+			};
+		}
+
+		// const query = jobNumber ? {jobNumber: new RegExp(jobNumber, "i")} : {}; // Условие поиска
 
 		const jobs = await Job.find(query); // Ищем продукты по названию (если есть)
 		const total = await Job.countDocuments(query); // Подсчитываем количество
@@ -21,7 +35,6 @@ export const repositoryJobs = {
 	},
 
 	async createJob(args: {
-		// jobNumber: string;
 		customerName: string;
 		customerEmail: string;
 		customerPhone: string;
@@ -30,7 +43,6 @@ export const repositoryJobs = {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
 			id: generateId(),
-			// jobNumber: "2324",
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
@@ -69,8 +81,9 @@ export const repositoryJobs = {
 			updateFields,
 			{new: true, runValidators: true}
 		);
-		return updatedJob ? true : false;
-		// return updatedProduct || false;
+		return !!updatedJob;
+		// return updatedJob ? true : false;
+
 	},
 
 
