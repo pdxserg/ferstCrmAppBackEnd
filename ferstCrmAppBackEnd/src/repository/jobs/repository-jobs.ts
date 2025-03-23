@@ -44,7 +44,9 @@ export const repositoryJobs = {
 
 	// В репозитории
 	async updateJobById(jobId: string, newDescription?: string,
-	                    newName?: string
+	                    newName?: string,
+	                    newPhone?: string,
+	                    newEmail?: string
 	): Promise<boolean> {
 		const updateFields: any = {};
 
@@ -55,11 +57,17 @@ export const repositoryJobs = {
 		if (newName !== undefined) {
 			updateFields.customerName = newName;
 		}
+		if (newPhone !== undefined) {
+			updateFields.customerPhone = newPhone;
+		}
+		if (newEmail !== undefined) {
+			updateFields.customerEmail = newEmail;
+		}
 
 		const updatedJob = await Job.findOneAndUpdate(
-			{ id: jobId },
+			{id: jobId},
 			updateFields,
-			{ new: true, runValidators: true }
+			{new: true, runValidators: true}
 		);
 		return updatedJob ? true : false;
 		// return updatedProduct || false;
