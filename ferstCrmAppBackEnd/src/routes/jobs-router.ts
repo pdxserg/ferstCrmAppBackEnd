@@ -1,5 +1,6 @@
 import {Request, Response, Router} from "express";
 import {repositoryJobs} from "../repository/jobs/repository-jobs";
+import {validateRequestBody} from "../middleware/validateRequestBody";
 
 
 
@@ -163,7 +164,8 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Internal Server Error!!!"
  */
-jobsRouter.post('/', async (req: Request, res: Response) => {
+const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails'];
+jobsRouter.post('/',validateRequestBody(allowedJobKeys), async (req: Request, res: Response) => {
 
 	const customerName = req.body.customerName;
 	if (!customerName) {
