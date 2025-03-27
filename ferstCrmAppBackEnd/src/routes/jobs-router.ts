@@ -164,9 +164,13 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Internal Server Error!!!"
  */
-const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails'];
+const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails','address'];
 jobsRouter.post('/',validateRequestBody(allowedJobKeys), async (req: Request, res: Response) => {
 
+	const address = req.body.address;
+	if (!address) {
+		res.status(400).send({error: "address is required!"});
+	}
 	const customerName = req.body.customerName;
 	if (!customerName) {
 		res.status(400).send({error: "customerName is required!"});
@@ -189,6 +193,7 @@ jobsRouter.post('/',validateRequestBody(allowedJobKeys), async (req: Request, re
 			customerEmail,
 			customerPhone,
 			jobDetails,
+			address,
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {

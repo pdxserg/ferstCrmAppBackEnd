@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+
+export type AddressType={
+	houseStreet:string
+	suitApt:string
+	city:string
+	state:string
+	zip:string
+}
 export interface Ijob extends Document {
 	id: string,
 	jobNumber: string
@@ -7,6 +15,7 @@ export interface Ijob extends Document {
 	customerEmail: string
 	customerPhone: string
 	jobDetails: string
+	address:AddressType
 }
 
 // Определяем схему продукта
@@ -17,6 +26,13 @@ const jobSchema = new mongoose.Schema({
 	customerEmail: { type: String, required: true },
 	customerPhone: { type: String, required: true },
 	jobDetails: { type: String, required: true },
+	address:{
+		houseStreet:{type: String, required: true},
+		suitApt:{type: String },
+		city:{type: String, required: true},
+		state:{type: String, required: true},
+		zip:{type: String, required: true},
+	}
 
 });
 

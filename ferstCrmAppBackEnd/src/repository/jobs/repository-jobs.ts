@@ -1,4 +1,4 @@
-import {Ijob, Job} from "./job.model";
+import {AddressType, Ijob, Job} from "./job.model";
 
 
 export const repositoryJobs = {
@@ -39,6 +39,7 @@ export const repositoryJobs = {
 		customerEmail: string;
 		customerPhone: string;
 		jobDetails: string;
+		address:AddressType
 	}): Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
@@ -46,7 +47,14 @@ export const repositoryJobs = {
 			customerName: args.customerName,
 			customerEmail: args.customerEmail,
 			customerPhone: args.customerPhone,
-			jobDetails: args.jobDetails
+			jobDetails: args.jobDetails,
+			address: {
+				houseStreet: args.address.houseStreet,
+				suitApt: args.address.suitApt,
+				city: args.address.city,
+				state:args.address.state,
+				zip: args.address.zip
+			}
 		})
 		const savedJob = await newJob.save();
 		// Return the saved job with the jobNumber
