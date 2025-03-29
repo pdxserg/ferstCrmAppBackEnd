@@ -165,7 +165,9 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  *                   example: "Internal Server Error!!!"
  */
 const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails','address'];
-jobsRouter.post('/',validateRequestBody(allowedJobKeys), async (req: Request, res: Response) => {
+jobsRouter.post('/',
+	// validateRequestBody(allowedJobKeys),
+	async (req: Request, res: Response) => {
 
 	const address = req.body.address;
 	if (!address) {
