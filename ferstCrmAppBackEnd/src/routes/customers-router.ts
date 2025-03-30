@@ -196,14 +196,14 @@ customersRouter.post('/', async (req: Request, res: Response) => {
 	}
 });
 
-// jobsRouter.get('/:id', async (req: Request, res: Response) => {
-// 		const job = await repositoryJobs.getJobById(req.params.id)
-// 		if (job) {
-// 			res.json({message: "Job found!",job});
-// 		} else {
-// 			res.status(404).send({error: "Job not found!!!"});
-// 		}
-// 	});
+customersRouter.get('/:id', async (req: Request, res: Response) => {
+		const customer = await repositoryCustomers.getCustomersById(req.params.id)
+		if (customer) {
+			res.json({message: "Customers found!",customer});
+		} else {
+			res.status(404).send({error: "Customers not found!!!"});
+		}
+	});
 
 
 //

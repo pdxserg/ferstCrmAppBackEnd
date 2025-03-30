@@ -1,4 +1,5 @@
 import {AddressType, Ijob, Job} from "./job.model";
+import {ICustomer} from "../customers/customers.model";
 
 
 export const repositoryJobs = {
@@ -35,25 +36,23 @@ export const repositoryJobs = {
 	},
 
 	async createJob(args: {
-		customerName: string;
-		customerEmail: string;
-		customerPhone: string;
+		customer:ICustomer
 		jobDetails: string;
-		address:AddressType
+
 	}): Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
 			id: generateId(),
-			customerName: args.customerName,
-			customerEmail: args.customerEmail,
-			customerPhone: args.customerPhone,
+			customerName: args.customer.customerName,
+			customerEmail: args.customer.customerEmail,
+			customerPhone: args.customer.customerPhone,
 			jobDetails: args.jobDetails,
 			address: {
-				houseStreet: args.address.houseStreet,
-				suitApt: args.address.suitApt,
-				city: args.address.city,
-				state:args.address.state,
-				zip: args.address.zip
+				houseStreet: args.customer.address.houseStreet,
+				suitApt: args.customer.address.suitApt,
+				city: args.customer.address.city,
+				state:args.customer.address.state,
+				zip: args.customer.address.zip
 			}
 		})
 		const savedJob = await newJob.save();

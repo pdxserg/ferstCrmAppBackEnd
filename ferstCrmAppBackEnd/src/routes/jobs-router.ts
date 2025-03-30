@@ -169,33 +169,20 @@ jobsRouter.post('/',
 	// validateRequestBody(allowedJobKeys),
 	async (req: Request, res: Response) => {
 
-	const address = req.body.address;
-	if (!address) {
-		res.status(400).send({error: "address is required!"});
+	const customer = req.body.customer;
+	if (!customer) {
+		res.status(400).send({error: "customer is required!"});
 	}
-	const customerName = req.body.customerName;
-	if (!customerName) {
-		res.status(400).send({error: "customerName is required!"});
-	}
-	const customerEmail = req.body.customerEmail;
-	if (!customerEmail) {
-		res.status(400).send({error: "customerEmail is required!"});
-	}
-	const customerPhone = req.body.customerPhone;
-	if (!customerPhone) {
-		res.status(400).send({error: "customerPhone is required!"});
-	}
+
 	const jobDetails = req.body.jobDetails;
 	if (!jobDetails) {
 		res.status(400).send({error: "jobDetails is required!"});
 	}
 	try {
 		const createdJob = await repositoryJobs.createJob({
-			customerName,
-			customerEmail,
-			customerPhone,
+			customer,
 			jobDetails,
-			address,
+
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {

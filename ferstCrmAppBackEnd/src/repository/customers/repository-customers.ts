@@ -24,14 +24,14 @@ export const repositoryCustomers = {
 	},
 
 
-	// async getJobById(id: string): Promise<Ijob | null> {
-	// 	let job = await Job.findOne({id: id})
-	// 	if (job) {
-	// 		return job
-	// 	} else {
-	// 		return null
-	// 	}
-	// },
+	async getCustomersById(id: string): Promise<ICustomer | null> {
+		let customer = await Customer.findOne({id: id})
+		if (customer) {
+			return customer
+		} else {
+			return null
+		}
+	},
 
 	async createCustomer(args: {
 		customerName: string;
