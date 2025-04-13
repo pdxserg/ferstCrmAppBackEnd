@@ -51,7 +51,15 @@ export const customersRouter = Router()
 customersRouter.get('/', async (req: Request, res: Response) => {
 	const { searchTerm } = req.query;
 	const {customers: items, total} = await repositoryCustomers.findCustomers(searchTerm?.toString());
-	res.send({totalCount: total, resultCode: 0, items})
+	res.json({totalCount: total, resultCode: 0, items})
+});
+customersRouter.get('/:id', async (req: Request, res: Response) => {
+	const customer = await repositoryCustomers.getCustomersById(req.params.id)
+	if (customer) {
+		res.json({message: "Customers found!",customer});
+	} else {
+		res.status(404).json({error: "Customers not found!!!"});
+	}
 });
 
 // /**
@@ -169,19 +177,19 @@ customersRouter.post('/', async (req: Request, res: Response) => {
 
 	const address = req.body.address;
 	if (!address) {
-		res.status(400).send({error: "address is required!"});
+		res.status(400).json({error: "address is required!"});
 	}
 	const customerName = req.body.customerName;
 	if (!customerName) {
-		res.status(400).send({error: "customerName is required!"});
+		res.status(400).json({error: "customerName is required!"});
 	}
 	const customerEmail = req.body.customerEmail;
 	if (!customerEmail) {
-		res.status(400).send({error: "customerEmail is required!"});
+		res.status(400).json({error: "customerEmail is required!"});
 	}
 	const customerPhone = req.body.customerPhone;
 	if (!customerPhone) {
-		res.status(400).send({error: "customerPhone is required!"});
+		res.status(400).json({error: "customerPhone is required!"});
 	}
 	try {
 		const createdJob = await repositoryCustomers.createCustomer({
@@ -190,20 +198,13 @@ customersRouter.post('/', async (req: Request, res: Response) => {
 			customerPhone,
 			address,
 		});
-		res.status(201).send(createdJob);
+		res.status(201).json(createdJob);
 	} catch (error) {
-		res.status(500).send({error: "Internal Server Error11111"});
+		res.status(500).json({error: "Internal Server Error11111"});
 	}
 });
 
-customersRouter.get('/:id', async (req: Request, res: Response) => {
-		const customer = await repositoryCustomers.getCustomersById(req.params.id)
-		if (customer) {
-			res.json({message: "Customers found!",customer});
-		} else {
-			res.status(404).send({error: "Customers not found!!!"});
-		}
-	});
+
 
 
 //

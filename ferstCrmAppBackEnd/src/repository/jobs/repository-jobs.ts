@@ -1,4 +1,4 @@
-import {AddressType, Ijob, Job} from "./job.model";
+import { Ijob, Job} from "./job.model";
 import {ICustomer} from "../customers/customers.model";
 
 
@@ -37,7 +37,6 @@ export const repositoryJobs = {
 
 	async createJob(args: {
 		customer:ICustomer
-		jobDetails: string;
 
 	}): Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
@@ -46,7 +45,10 @@ export const repositoryJobs = {
 			customerName: args.customer.customerName,
 			customerEmail: args.customer.customerEmail,
 			customerPhone: args.customer.customerPhone,
-			jobDetails: args.jobDetails,
+			jobDetails: {
+				description:"",
+				TypeEquipment:""
+			},
 			address: {
 				houseStreet: args.customer.address.houseStreet,
 				suitApt: args.customer.address.suitApt,

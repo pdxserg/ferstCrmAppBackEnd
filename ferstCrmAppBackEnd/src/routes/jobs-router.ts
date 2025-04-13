@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {repositoryJobs} from "../repository/jobs/repository-jobs";
-import {validateRequestBody} from "../middleware/validateRequestBody";
+
 
 
 
@@ -174,15 +174,9 @@ jobsRouter.post('/',
 		res.status(400).send({error: "customer is required!"});
 	}
 
-	const jobDetails = req.body.jobDetails;
-	if (!jobDetails) {
-		res.status(400).send({error: "jobDetails is required!"});
-	}
 	try {
 		const createdJob = await repositoryJobs.createJob({
 			customer,
-			jobDetails,
-
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {
