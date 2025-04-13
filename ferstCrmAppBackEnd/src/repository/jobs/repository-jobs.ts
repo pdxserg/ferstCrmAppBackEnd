@@ -27,7 +27,7 @@ export const repositoryJobs = {
 
 
 	async getJobById(id: string): Promise<Ijob | null> {
-		let job = await Job.findOne({id: id})
+		let job = await Job.findOne({jobId: id})
 		if (job) {
 			return job
 		} else {
@@ -41,7 +41,7 @@ export const repositoryJobs = {
 	}): Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
-			id: generateId(),
+			jobId: generateId(),
 			customerName: args.customer.customerName,
 			customerEmail: args.customer.customerEmail,
 			customerPhone: args.customer.customerPhone,
@@ -86,7 +86,7 @@ export const repositoryJobs = {
 		}
 
 		const updatedJob = await Job.findOneAndUpdate(
-			{id: jobId},
+			{jobId: jobId},
 			updateFields,
 			{new: true, runValidators: true}
 		);
@@ -96,8 +96,8 @@ export const repositoryJobs = {
 	},
 
 
-	async deleteJobById(id: string): Promise<boolean> {
-		const deletedJob = await Job.findOneAndDelete({id});
+	async deleteJobById(jobId: string): Promise<boolean> {
+		const deletedJob = await Job.findOneAndDelete({jobId});
 		return !!deletedJob; //it same (deletedJob ? true : false)
 
 	}
