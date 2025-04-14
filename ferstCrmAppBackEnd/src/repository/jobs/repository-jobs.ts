@@ -1,6 +1,8 @@
 import { Ijob, Job} from "./job.model";
 import {ICustomer} from "../customers/customers.model";
-import {nanoid} from "nanoid";
+import ShortUniqueId from 'short-uuid'
+
+
 
 
 export const repositoryJobs = {
@@ -37,9 +39,10 @@ export const repositoryJobs = {
 	},
 
 	async createJob(args: { customer:ICustomer }): Promise<Ijob> {
+		const shortUUID = ShortUniqueId();
 
-		const newJob = new Job({
-			jobId: nanoid(8),
+		const newJob =new Job({
+			jobId: shortUUID.new(),
 			customerName: args.customer.customerName,
 			customerEmail: args.customer.customerEmail,
 			customerPhone: args.customer.customerPhone,

@@ -1,5 +1,6 @@
 import {AddressType, Customer, ICustomer,} from "./customers.model";
-import {nanoid} from "nanoid";
+import ShortUniqueId from 'short-uuid'
+import {Job} from "../jobs/job.model";
 
 
 export const repositoryCustomers = {
@@ -40,8 +41,11 @@ export const repositoryCustomers = {
 		customerPhone: string;
 		address:AddressType
 	}): Promise<ICustomer> {
+
+		const shortUUID = ShortUniqueId();
+
 		const newJob = new Customer({
-			customerId: nanoid(8),
+			customerId:  shortUUID.new(),
 			customerName: customerData.customerName,
 			customerEmail: customerData.customerEmail,
 			customerPhone: customerData.customerPhone,
