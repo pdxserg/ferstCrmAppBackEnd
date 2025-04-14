@@ -164,9 +164,8 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Internal Server Error!!!"
  */
-const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails','address'];
 jobsRouter.post('/',
-	// validateRequestBody(allowedJobKeys),
+
 	async (req: Request, res: Response) => {
 
 	const customer = req.body.customer;
@@ -180,7 +179,9 @@ jobsRouter.post('/',
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {
-		res.status(500).send({error: "Internal Server Error11111"});
+		debugger
+		console.error("Error creating job:", error); // Log the actual error
+		res.status(500).send({error: "Internal Server Error"})
 	}
 });
 

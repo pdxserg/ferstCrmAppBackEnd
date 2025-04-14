@@ -26,8 +26,8 @@ export const repositoryJobs = {
 	},
 
 
-	async getJobById(id: string): Promise<Ijob | null> {
-		let job = await Job.findOne({jobId: id})
+	async getJobById(jobId: string): Promise<Ijob | null> {
+		let job = await Job.findOne({jobId: jobId})
 		if (job) {
 			return job
 		} else {
@@ -35,10 +35,8 @@ export const repositoryJobs = {
 		}
 	},
 
-	async createJob(args: {
-		customer:ICustomer
+	async createJob(args: { customer:ICustomer }): Promise<Ijob> {
 
-	}): Promise<Ijob> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
 			jobId: generateId(),
@@ -57,6 +55,7 @@ export const repositoryJobs = {
 				zip: args.customer.address.zip
 			}
 		})
+
 		const savedJob = await newJob.save();
 		// Return the saved job with the jobNumber
 		return savedJob;
