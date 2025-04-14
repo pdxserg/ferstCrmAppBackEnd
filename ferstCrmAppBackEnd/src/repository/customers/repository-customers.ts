@@ -28,6 +28,7 @@ export const repositoryCustomers = {
 
 	async getCustomersById(customerId: string): Promise<ICustomer | null> {
 		let customer = await Customer.findOne({customerId})
+		debugger
 		if (customer) {
 			return customer
 		} else {

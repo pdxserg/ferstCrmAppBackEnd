@@ -49,12 +49,15 @@ export const customersRouter = Router()
  *                         example: "2025-03-11T14:00:27.238Z"
  */
 customersRouter.get('/', async (req: Request, res: Response) => {
+	debugger
 	const { searchTerm } = req.query;
 	const {customers: items, total} = await repositoryCustomers.findCustomers(searchTerm?.toString());
 	res.json({totalCount: total, resultCode: 0, items})
 });
+
 customersRouter.get('/:id', async (req: Request, res: Response) => {
-	const customer = await repositoryCustomers.getCustomersById(req.params.id)
+	debugger
+	const customer = await repositoryCustomers.getCustomersById(req.params.id.trim())
 	if (customer) {
 		res.json({message: "Customers found!",customer});
 	} else {
