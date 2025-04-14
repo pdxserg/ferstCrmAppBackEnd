@@ -175,7 +175,7 @@ customersRouter.get('/:id', async (req: Request, res: Response) => {
 // const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails','address'];
 customersRouter.post('/', async (req: Request, res: Response) => {
 const {customerName, customerPhone, customerEmail, address}=req.body
-
+debugger
 	if (!customerName) {
 		res.status(400).json({error: "customerName is required!"});
 	}
@@ -213,6 +213,7 @@ const {customerName, customerPhone, customerEmail, address}=req.body
 		);
 		res.status(201).json(newCustomer);
 	} catch (error) {
+		console.log(error)
 		res.status(500).json({error: "Internal Server Error11111"});
 	}
 });

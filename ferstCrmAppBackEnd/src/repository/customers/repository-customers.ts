@@ -1,4 +1,5 @@
 import {AddressType, Customer, ICustomer,} from "./customers.model";
+import {nanoid} from "nanoid";
 
 
 export const repositoryCustomers = {
@@ -39,9 +40,8 @@ export const repositoryCustomers = {
 		customerPhone: string;
 		address:AddressType
 	}): Promise<ICustomer> {
-		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Customer({
-			customerId: generateId(),
+			customerId: nanoid(8),
 			customerName: customerData.customerName,
 			customerEmail: customerData.customerEmail,
 			customerPhone: customerData.customerPhone,
@@ -54,6 +54,7 @@ export const repositoryCustomers = {
 			}
 		})
 		const savedCustomer = await newJob.save();
+		debugger
 		// Return the saved job with the jobNumber
 		return savedCustomer;
 	},

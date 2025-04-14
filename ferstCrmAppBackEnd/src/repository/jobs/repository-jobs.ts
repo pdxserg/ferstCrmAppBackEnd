@@ -1,5 +1,6 @@
 import { Ijob, Job} from "./job.model";
 import {ICustomer} from "../customers/customers.model";
+import {nanoid} from "nanoid";
 
 
 export const repositoryJobs = {
@@ -37,9 +38,8 @@ export const repositoryJobs = {
 
 	async createJob(args: { customer:ICustomer }): Promise<Ijob> {
 
-		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Job({
-			jobId: generateId(),
+			jobId: nanoid(8),
 			customerName: args.customer.customerName,
 			customerEmail: args.customer.customerEmail,
 			customerPhone: args.customer.customerPhone,
