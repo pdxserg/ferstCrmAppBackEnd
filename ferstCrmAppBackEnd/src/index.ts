@@ -75,7 +75,7 @@ void startApp();
 
 
 // debugger
-// https://www.youtube.com/watch?v=vWMjPRiEhbA    7:54
+//todo https://www.youtube.com/watch?v=vWMjPRiEhbA    7:54
 ///example GPT
 // import express from "express";✅
 // import cors from "cors";

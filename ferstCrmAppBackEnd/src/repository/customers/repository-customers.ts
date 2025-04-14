@@ -24,8 +24,8 @@ export const repositoryCustomers = {
 	},
 
 
-	async getCustomersById(id: string): Promise<ICustomer | null> {
-		let customer = await Customer.findOne({id: id})
+	async getCustomersById(customerId: string): Promise<ICustomer | null> {
+		let customer = await Customer.findOne({customerId})
 		if (customer) {
 			return customer
 		} else {
@@ -33,7 +33,7 @@ export const repositoryCustomers = {
 		}
 	},
 
-	async createCustomer(args: {
+	async createCustomer(customerData: {
 		customerName: string;
 		customerEmail: string;
 		customerPhone: string;
@@ -41,16 +41,16 @@ export const repositoryCustomers = {
 	}): Promise<ICustomer> {
 		const generateId = () => Math.random().toString(36).slice(2, 9);
 		const newJob = new Customer({
-			id: generateId(),
-			customerName: args.customerName,
-			customerEmail: args.customerEmail,
-			customerPhone: args.customerPhone,
+			customerId: generateId(),
+			customerName: customerData.customerName,
+			customerEmail: customerData.customerEmail,
+			customerPhone: customerData.customerPhone,
 			address: {
-				houseStreet: args.address.houseStreet,
-				suitApt: args.address.suitApt,
-				city: args.address.city,
-				state:args.address.state,
-				zip: args.address.zip
+				houseStreet: customerData.address.houseStreet,
+				suitApt: customerData.address.suitApt,
+				city: customerData.address.city,
+				state:customerData.address.state,
+				zip: customerData.address.zip
 			}
 		})
 		const savedCustomer = await newJob.save();
@@ -92,8 +92,8 @@ export const repositoryCustomers = {
 	// },
 
 
-	async deleteCustomerById(id: string): Promise<boolean> {
-		const deletedCustomer = await Customer.findOneAndDelete({id});
+	async deleteCustomerById(customerId: string): Promise<boolean> {
+		const deletedCustomer = await Customer.findOneAndDelete({customerId});
 		return !!deletedCustomer; //it same (deletedJob ? true : false)
 
 	}

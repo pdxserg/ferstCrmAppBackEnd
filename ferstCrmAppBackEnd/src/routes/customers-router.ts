@@ -174,31 +174,44 @@ customersRouter.get('/:id', async (req: Request, res: Response) => {
  */
 // const allowedJobKeys = ['customerName', 'customerEmail', 'customerPhone', 'jobDetails','address'];
 customersRouter.post('/', async (req: Request, res: Response) => {
+const {customerName, customerPhone, customerEmail, address}=req.body
 
-	const address = req.body.address;
-	if (!address) {
-		res.status(400).json({error: "address is required!"});
-	}
-	const customerName = req.body.customerName;
 	if (!customerName) {
 		res.status(400).json({error: "customerName is required!"});
 	}
-	const customerEmail = req.body.customerEmail;
-	if (!customerEmail) {
-		res.status(400).json({error: "customerEmail is required!"});
-	}
-	const customerPhone = req.body.customerPhone;
+
 	if (!customerPhone) {
 		res.status(400).json({error: "customerPhone is required!"});
 	}
+	const customerData: any = {
+		customerName,
+		customerEmail: customerEmail || '',
+		customerPhone,
+	};
+
+	// Если пришел адрес, сохраняем его
+	if (address) {
+		customerData.address = {
+			houseStreet: address.houseStreet || '', // Если нет, ставим пустую строку
+			suitApt: address.suitApt || '',         // Если нет, ставим пустую строку
+			city: address.city || '',               // Если нет, ставим пустую строку
+			state: address.state || '',             // Если нет, ставим пустую строку
+			zip: address.zip || '',                 // Если нет, ставим пустую строку
+		};
+	} else {
+		// Если не пришел address, сохраняем как пустой объект или пропускаем это поле
+		customerData.address = {
+			houseStreet: '',
+			suitApt: '',
+			city: '',
+			state: '',
+			zip: ''
+		};
+	}
 	try {
-		const createdJob = await repositoryCustomers.createCustomer({
-			customerName,
-			customerEmail,
-			customerPhone,
-			address,
-		});
-		res.status(201).json(createdJob);
+		const newCustomer = await repositoryCustomers.createCustomer(customerData
+		);
+		res.status(201).json(newCustomer);
 	} catch (error) {
 		res.status(500).json({error: "Internal Server Error11111"});
 	}
