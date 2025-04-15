@@ -1,5 +1,6 @@
 import {Request, Response, Router} from "express";
 import {repositoryJobs} from "../repository/jobs/repository-jobs";
+import {ICustomer} from "../repository/customers/customers.model";
 
 
 
@@ -168,14 +169,15 @@ jobsRouter.post('/',
 
 	async (req: Request, res: Response) => {
 
-	const customer = req.body.customer;
+	const {customer, jobDetails} = req.body;
+
 	if (!customer) {
 		res.status(400).send({error: "customer is required!"});
 	}
 
 	try {
 		const createdJob = await repositoryJobs.createJob({
-			customer,
+			customer,jobDetails
 		});
 		res.status(201).send(createdJob);
 	} catch (error) {

@@ -15,28 +15,39 @@ export interface Ijob extends Document {
 	customerName: string
 	customerEmail: string
 	customerPhone: string
-	jobDetails:{description:string, TypeEquipment:string}
+	jobDetails:{description:string, typeEquipment:string}
 	address: AddressType
+
+	customerId: string
+	timeAppointment:string
+	timeCreated:string
+	equipmentType:string
+	descriptionJob:string
+
 }
 
 const jobSchema = new mongoose.Schema({
 	jobId: {type: String, required: true, unique: true},
 	jobNumber: {type: String},
 	customerName: {type: String, required: true},
-	customerEmail: {type: String, required: true},
-	customerPhone: {type: String, required: true},
+	customerEmail: {type: String},
+	customerPhone: {type: String},
 	jobDetails: {
 	description:{type: String  },
-	TypeEquipment:{type: String  },
+	typeEquipment:{type: String  },
     },
 	address: {
 		houseStreet: {type: String, required: true},
 		suitApt: {type: String},
-		city: {type: String, required: true},
-		state: {type: String, required: true},
-		zip: {type: String, required: true},
-	}
-
+		city: {type: String},
+		state: {type: String},
+		zip: {type: String},
+	},
+	customerId: {type: String, required: true},
+	timeAppointment:{type: String},
+	timeCreated:{type: String},
+	equipmentType:{type: String},
+	descriptionJob:{type: String},
 });
 
 // Middleware to auto-generate jobNumber before saving a new job

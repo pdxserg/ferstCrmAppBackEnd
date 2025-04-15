@@ -38,17 +38,18 @@ export const repositoryJobs = {
 		}
 	},
 
-	async createJob(args: { customer:ICustomer }): Promise<Ijob> {
+	async createJob(args: { customer:ICustomer, jobDetails:{description:string, typeEquipment:string} }): Promise<Ijob> {
 		const shortUUID = ShortUniqueId();
 
 		const newJob =new Job({
 			jobId: shortUUID.new(),
+			customerId: args.customer.customerId,
 			customerName: args.customer.customerName,
 			customerEmail: args.customer.customerEmail,
 			customerPhone: args.customer.customerPhone,
 			jobDetails: {
-				description:"",
-				TypeEquipment:""
+				description:args.jobDetails.description,
+				typeEquipment:args.jobDetails.typeEquipment
 			},
 			address: {
 				houseStreet: args.customer.address.houseStreet,
