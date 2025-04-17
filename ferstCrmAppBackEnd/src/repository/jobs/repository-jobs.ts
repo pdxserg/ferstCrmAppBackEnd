@@ -29,14 +29,29 @@ export const repositoryJobs = {
 	},
 
 
-	async getJobById(jobId: string): Promise<Ijob | null> {
+	async getJobById(jobId: string): Promise<any> {//todo fix any
+		debugger
 		let job = await Job.findOne({jobId: jobId})
 		if (job) {
 			return job
 		} else {
-			return null
+			let jobs = await Job.find({customerId:jobId})
+
+			const total = await Job.countDocuments({customerId:jobId})
+
+			return {jobs, total};
 		}
 	},
+//todo remove (getJobByCustomerId)
+	async getJobByCustomerId(customerId: string): Promise<{ jobs: Ijob[], total: number }> {
+		debugger
+		let jobs = await Job.find({customerId})
+
+		const total = await Job.countDocuments({customerId})
+
+			return {jobs, total};
+	},
+
 
 	async createJob(args: { customer:ICustomer, jobDetails:{description:string, typeEquipment:string} }): Promise<Ijob> {
 		const shortUUID = ShortUniqueId();

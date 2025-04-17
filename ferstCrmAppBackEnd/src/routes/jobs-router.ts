@@ -105,6 +105,27 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
 // 		res.status(404).send({error: "Not found!!!"})
 // 	}
 // });
+jobsRouter.get('/:id', async (req: Request, res: Response) => {
+	const {job,jobs: items, total} = await repositoryJobs.getJobById(req.params.id)
+	debugger
+	if (job) {
+		res.json({message: "Job found!", job});
+	}if (items) {
+			res.json({message: "Jobs found!",totalCount: total, resultCode: 0, items});
+	} else {
+		res.status(404).send({error: "Job not found!!!"});
+	}
+});
+
+jobsRouter.get('/:id', async (req: Request, res: Response) => {
+	const {jobs: items, total} = await repositoryJobs.getJobByCustomerId(req.params.id)
+	if (items) {
+		res.json({message: "Jobs found!",totalCount: total, resultCode: 0, items});
+	} else {
+		res.status(404).send({error: "Jobs not found!!!"});
+	}
+});
+
 
 
 /**
@@ -187,14 +208,6 @@ jobsRouter.post('/',
 	}
 });
 
-jobsRouter.get('/:id', async (req: Request, res: Response) => {
-		const job = await repositoryJobs.getJobById(req.params.id)
-		if (job) {
-			res.json({message: "Job found!",job});
-		} else {
-			res.status(404).send({error: "Job not found!!!"});
-		}
-	});
 
 
 //
