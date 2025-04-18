@@ -29,18 +29,22 @@ export const repositoryJobs = {
 	},
 
 
-	async getJobById(jobId: string): Promise<any> {//todo fix any
-		debugger
-		let job = await Job.findOne({jobId: jobId})
+	async getJobById(jobId: string): Promise<{ job?: Ijob, jobs?: Ijob[], total?: number }> {
+		// First try to find by jobId
+		const job = await Job.findOne({ jobId: jobId });
 		if (job) {
-			return job
-		} else {
-			let jobs = await Job.find({customerId:jobId})
-
-			const total = await Job.countDocuments({customerId:jobId})
-
-			return {jobs, total};
+			return { job };
 		}
+		// If no job found by jobId, try to find by customerId
+		const jobs = await Job.find({ customerId: jobId });
+		const total = await Job.countDocuments({ customerId: jobId });
+
+		// Only return jobs if we found some
+		if (jobs.length > 0) {
+			return { jobs, total };
+		}
+		// If we didn't find anything, return empty object
+		return {};
 	},
 //todo remove (getJobByCustomerId)
 	async getJobByCustomerId(customerId: string): Promise<{ jobs: Ijob[], total: number }> {

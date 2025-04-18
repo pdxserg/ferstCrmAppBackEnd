@@ -17,7 +17,6 @@ export interface Ijob extends Document {
 	customerPhone: string
 	jobDetails:{description:string, typeEquipment:string}
 	address: AddressType
-
 	customerId: string
 	timeAppointment:string
 	timeCreated:string
