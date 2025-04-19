@@ -50,6 +50,7 @@ export const jobsRouter = Router()
  *                         example: "2025-03-11T14:00:27.238Z"
  */
 jobsRouter.get('/', async (req: Request, res: Response) => {
+	debugger
 	const { searchTerm } = req.query;
 	const {jobs: items, total} = await repositoryJobs.findJobs(searchTerm?.toString());
 	res.send({totalCount: total, resultCode: 0, items})
@@ -106,18 +107,17 @@ jobsRouter.get('/', async (req: Request, res: Response) => {
 // 	}
 // });
 jobsRouter.get('/:id', async (req: Request, res: Response) => {
-	const result = await repositoryJobs.getJobById(req.params.id);
+	const job = await repositoryJobs.getJobById(req.params.id);
 
-	if (result.job) {
-		debugger
-		res.json({ message: "Job found!", job: result.job });
-	} else if (result.jobs && result.total !== undefined) {
-		res.json({
-			message: "Jobs found!",
-			totalCount: result.total,
-			resultCode: 0,
-			items: result.jobs
-		});
+	if (job) {
+		res.json({ message: "Job found!", job: job });
+	// } else if (result.jobs && result.total !== undefined) {
+	// 	res.json({
+	// 		message: "Jobs found!",
+	// 		totalCount: result.total,
+	// 		resultCode: 0,
+	// 		items: result.jobs
+	// 	});
 	} else {
 		res.status(404).send({ error: "Job not found!!!" });
 	}

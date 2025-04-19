@@ -8,8 +8,9 @@ import ShortUniqueId from 'short-uuid'
 export const repositoryJobs = {
 	async findJobs(searchTerm: string | null | undefined): Promise<{ jobs: Ijob[], total: number }> {
 		let query: any = {};
-
+debugger
 		if (searchTerm) {
+			debugger
 			const regex = new RegExp(searchTerm, "i"); // Case-insensitive regex
 
 			query = {
@@ -17,6 +18,7 @@ export const repositoryJobs = {
 					{ jobNumber: regex },
 					{ customerName: regex },
 					{ customerPhone: regex },
+					{ customerId: searchTerm },
 				],
 			};
 		}
@@ -29,20 +31,20 @@ export const repositoryJobs = {
 	},
 
 
-	async getJobById(jobId: string): Promise<{ job?: Ijob, jobs?: Ijob[], total?: number }> {
+	async getJobById(jobId: string): Promise<{ job?: Ijob }> {
 		// First try to find by jobId
-		const job = await Job.findOne({ jobId: jobId });
+		const job = await Job.findOne({jobId});
 		if (job) {
-			return { job };
+			return {job};
 		}
-		// If no job found by jobId, try to find by customerId
-		const jobs = await Job.find({ customerId: jobId });
-		const total = await Job.countDocuments({ customerId: jobId });
-
-		// Only return jobs if we found some
-		if (jobs.length > 0) {
-			return { jobs, total };
-		}
+		// // If no job found by jobId, try to find by customerId
+		// const jobs = await Job.find({ customerId: jobId });
+		// const total = await Job.countDocuments({ customerId: jobId });
+		//
+		// // Only return jobs if we found some
+		// if (jobs.length > 0) {
+		// 	return { jobs, total };
+		// }
 		// If we didn't find anything, return empty object
 		return {};
 	},
