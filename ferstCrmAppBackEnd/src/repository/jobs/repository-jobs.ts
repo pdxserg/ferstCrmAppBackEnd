@@ -31,11 +31,11 @@ debugger
 	},
 
 
-	async getJobById(jobId: string): Promise<{ job?: Ijob }> {
+	async getJobById(jobId: string): Promise<Ijob|null > {
 		// First try to find by jobId
 		const job = await Job.findOne({jobId});
 		if (job) {
-			return {job};
+			return job;
 		}
 		// // If no job found by jobId, try to find by customerId
 		// const jobs = await Job.find({ customerId: jobId });
@@ -46,7 +46,7 @@ debugger
 		// 	return { jobs, total };
 		// }
 		// If we didn't find anything, return empty object
-		return {};
+		return null;
 	},
 //todo remove (getJobByCustomerId)
 	async getJobByCustomerId(customerId: string): Promise<{ jobs: Ijob[], total: number }> {
