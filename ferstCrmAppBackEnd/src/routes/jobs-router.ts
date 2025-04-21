@@ -124,14 +124,6 @@ jobsRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 
-jobsRouter.get('/:id', async (req: Request, res: Response) => {
-	const {jobs: items, total} = await repositoryJobs.getJobByCustomerId(req.params.id)
-	if (items) {
-		res.json({message: "Jobs found!",totalCount: total, resultCode: 0, items});
-	} else {
-		res.status(404).send({error: "Jobs not found!!!"});
-	}
-});
 
 
 
@@ -305,22 +297,50 @@ jobsRouter.post('/',
 // 	}
 // });
 
-
 jobsRouter.put('/:id', async (req: Request, res: Response) => {
+	try {
+		const updateData = {
+			'jobDetails.description': req.body.jobDetails?.description,
+			customerName: req.body.customerName,
+			customerPhone: req.body.customerPhone,
+			customerEmail: req.body.customerEmail,
+		};
 
-	const newDescription = req.body.jobDetails;
-	const newName = req.body.customerName;
-	const newPhone = req.body.customerPhone;
-	const newEmail = req.body.customerEmail;
-	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription, newName, newPhone, newEmail);
+		const isUpdated = await repositoryJobs.updateJobById(req.params.id, updateData);
 
-	if (isUpdated) {
-		const job = await repositoryJobs.getJobById(req.params.id);
-		res.send({message: "Product updated successfully", job});
-	} else {
-		res.status(404).send({error: "Product not found!!!"});
+		if (isUpdated) {
+			const job = await repositoryJobs.getJobById(req.params.id);
+			res.send({ message: "Job updated successfully", job });
+		} else {
+			res.status(404).send({ error: "Job not found!" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({ error: "Something went wrong." });
 	}
 });
+// jobsRouter.put('/:id', async (req: Request, res: Response) => {
+//
+// 	const newDescription = req.body.jobDetails;
+// 	const newName = req.body.customerName;
+// 	const newPhone = req.body.customerPhone;
+// 	const newEmail = req.body.customerEmail;
+// 	const updateData={
+// 		'jobDetails.description':req.body.jobDetails.description,
+// 		customerName:req.body.customerName,
+// 		customerPhone:req.body.customerPhone,
+// 		customerEmail:req.body.customerEmail
+// 	}
+//
+// 	const isUpdated: boolean = await repositoryJobs.updateJobById(req.params.id, newDescription, newName, newPhone, newEmail);
+//
+// 	if (isUpdated) {
+// 		const job = await repositoryJobs.getJobById(req.params.id);
+// 		res.send({message: "Job updated successfully", job});
+// 	} else {
+// 		res.status(404).send({error: "Job not found!!!"});
+// 	}
+// });
 
 
 

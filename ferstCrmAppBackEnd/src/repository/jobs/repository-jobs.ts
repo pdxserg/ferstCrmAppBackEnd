@@ -23,7 +23,6 @@ debugger
 			};
 		}
 
-		// const query = jobNumber ? {jobNumber: new RegExp(jobNumber, "i")} : {}; // Условие поиска
 
 		const jobs = await Job.find(query); // Ищем продукты по названию (если есть)
 		const total = await Job.countDocuments(query); // Подсчитываем количество
@@ -37,26 +36,9 @@ debugger
 		if (job) {
 			return job;
 		}
-		// // If no job found by jobId, try to find by customerId
-		// const jobs = await Job.find({ customerId: jobId });
-		// const total = await Job.countDocuments({ customerId: jobId });
-		//
-		// // Only return jobs if we found some
-		// if (jobs.length > 0) {
-		// 	return { jobs, total };
-		// }
-		// If we didn't find anything, return empty object
 		return null;
 	},
-//todo remove (getJobByCustomerId)
-	async getJobByCustomerId(customerId: string): Promise<{ jobs: Ijob[], total: number }> {
-		debugger
-		let jobs = await Job.find({customerId})
 
-		const total = await Job.countDocuments({customerId})
-
-			return {jobs, total};
-	},
 
 
 	async createJob(args: { customer:ICustomer, jobDetails:{description:string, typeEquipment:string} }): Promise<Ijob> {
@@ -86,38 +68,53 @@ debugger
 		return savedJob;
 	},
 
+	async updateJobById(jobId: string, updateData: Partial<Ijob>): Promise<boolean> {
 
-	// В репозитории
-	async updateJobById(jobId: string, newDescription?: string,
-	                    newName?: string,
-	                    newPhone?: string,
-	                    newEmail?: string
-	): Promise<boolean> {
-		const updateFields: any = {};
+		try {
+			const updatedJob = await Job.findOneAndUpdate(
+				{ jobId },
+				{ $set: updateData },
+				{ new: true, runValidators: true }
+			);
 
-		if (newDescription !== undefined) {
-			updateFields.jobDetails = newDescription;
+			return !!updatedJob;
+		} catch (error) {
+			console.error("Error updating job:", error);
+			return false;
 		}
-
-		if (newName !== undefined) {
-			updateFields.customerName = newName;
-		}
-		if (newPhone !== undefined) {
-			updateFields.customerPhone = newPhone;
-		}
-		if (newEmail !== undefined) {
-			updateFields.customerEmail = newEmail;
-		}
-
-		const updatedJob = await Job.findOneAndUpdate(
-			{jobId: jobId},
-			updateFields,
-			{new: true, runValidators: true}
-		);
-		return !!updatedJob;
-		// return updatedJob ? true : false;
-
 	},
+	// В репозитории
+	// async updateJobById(jobId: string,
+	//                     newDescription?: string,
+	//                     newName?: string,
+	//                     newPhone?: string,
+	//                     newEmail?: string
+	// ): Promise<boolean> {
+	// 	const updateFields: any = {};
+	//
+	// 	if (newDescription !== undefined) {
+	// 		updateFields.jobDetails.description = newDescription;
+	// 	}
+	//
+	// 	if (newName !== undefined) {
+	// 		updateFields.customerName = newName;
+	// 	}
+	// 	if (newPhone !== undefined) {
+	// 		updateFields.customerPhone = newPhone;
+	// 	}
+	// 	if (newEmail !== undefined) {
+	// 		updateFields.customerEmail = newEmail;
+	// 	}
+	//
+	// 	const updatedJob = await Job.findOneAndUpdate(
+	// 		{jobId: jobId},
+	// 		updateFields,
+	// 		{new: true, runValidators: true}
+	// 	);
+	// 	return !!updatedJob;
+	// 	// return updatedJob ? true : false;
+	//
+	// },
 
 
 	async deleteJobById(jobId: string): Promise<boolean> {
